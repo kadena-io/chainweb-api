@@ -3,13 +3,13 @@
 module ChainwebApi.Types.ChainTip where
 
 ------------------------------------------------------------------------------
-import           Data.Aeson
-import           Data.Text (Text)
+import Data.Aeson
+import Data.Text (Text)
 ------------------------------------------------------------------------------
 
 data ChainTip = ChainTip
   { _tipHeight :: Int
-  , _tipHash :: Text
+  , _tipHash   :: Text
   } deriving (Eq,Ord,Show)
 
 instance FromJSON ChainTip where

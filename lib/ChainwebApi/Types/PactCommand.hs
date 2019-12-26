@@ -14,8 +14,8 @@ import ChainwebApi.Types.Signer
 data PactCommand = PactCommand
   { _pactCommand_payload :: Payload
   , _pactCommand_signers :: [Signer]
-  , _pactCommand_meta :: ChainwebMeta
-  , _pactCommand_nonce :: Text
+  , _pactCommand_meta    :: ChainwebMeta
+  , _pactCommand_nonce   :: Text
   } deriving (Eq,Show)
 
 instance FromJSON PactCommand where

@@ -3,8 +3,7 @@
 module ChainwebApi.Types.Base64Url where
 
 ------------------------------------------------------------------------------
-import           Control.Error
-import           Control.Lens
+import           Control.Lens (over)
 import           Data.Aeson
 import           Data.Aeson.Lens
 import           Data.ByteString (ByteString)
@@ -32,15 +31,6 @@ decodeB64UrlNoPaddingText :: Text -> Either String ByteString
 decodeB64UrlNoPaddingText = B64U.decode . T.encodeUtf8 . pad
   where
     pad t = let s = T.length t `mod` 4 in t <> T.replicate ((4 - s) `mod` 4) "="
-
-
--- FIXME Throwaway code...remove
-
-b64urlPrismT :: Prism' Text Text
-b64urlPrismT = prism' (T.decodeUtf8 . B64U.encode . T.encodeUtf8) (fmap T.decodeUtf8 . hush . decodeB64UrlNoPaddingText)
-
-b64urlPrism :: Prism' ByteString ByteString
-b64urlPrism = prism' (B64U.encode) (hush . decodeB64UrlNoPaddingText . T.decodeUtf8)
 
 data Block = Block
   { blockHeight :: Int

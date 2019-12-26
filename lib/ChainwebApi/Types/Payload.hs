@@ -19,11 +19,11 @@ instance FromJSON Exec where
     <*> o .: "data"
 
 data Cont = Cont
-  { _cont_pactId :: Text
+  { _cont_pactId   :: Text
   , _cont_rollback :: Bool
-  , _cont_step :: Int
-  , _cont_data :: Object
-  , _cont_proof :: Text
+  , _cont_step     :: Int
+  , _cont_data     :: Object
+  , _cont_proof    :: Text
   } deriving (Eq,Show)
 
 instance FromJSON Cont where
@@ -42,7 +42,7 @@ instance FromJSON Payload where
     case HM.lookup "exec" o of
       Nothing -> case HM.lookup "cont" o of
                    Nothing -> fail "Payload must be exec or cont"
-                   Just v -> ContPayload <$> parseJSON v
+                   Just v  -> ContPayload <$> parseJSON v
       Just v -> ExecPayload <$> parseJSON v
 
 payloadCode :: Payload -> Text

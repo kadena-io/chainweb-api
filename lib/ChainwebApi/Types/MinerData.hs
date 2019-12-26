@@ -8,8 +8,8 @@ import Data.Text (Text)
 ------------------------------------------------------------------------------
 
 data MinerData = MinerData
-  { _minerData_account :: Text
-  , _minerData_predicate :: Text
+  { _minerData_account    :: Text
+  , _minerData_predicate  :: Text
   , _minerData_publicKeys :: [Text]
   } deriving (Eq,Ord,Show)
 

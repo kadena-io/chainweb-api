@@ -8,7 +8,7 @@ import Data.Text (Text)
 ------------------------------------------------------------------------------
 
 data Signer = Signer
-  { _signer_addr :: Maybe Text
+  { _signer_addr   :: Maybe Text
   , _signer_scheme :: Maybe Text
   , _signer_pubKey :: Text
   } deriving (Eq,Ord,Show)
