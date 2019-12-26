@@ -28,8 +28,8 @@ library
     , bytestring            ^>=0.10
     , containers            ^>=0.6
     , errors                ^>=2.3
-    , hashable              ^>=1.2
-    , lens                  ^>=4.17
+    , hashable              >=1.2 && < 1.4
+    , lens                  >=4.17 && < 4.19
     , lens-aeson            >=1.0  && <1.2
     , readable              ^>=0.3
     , text

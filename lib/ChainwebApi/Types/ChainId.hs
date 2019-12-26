@@ -17,7 +17,7 @@ import           Text.Read (readMaybe)
 newtype ChainId = ChainId { unChainId :: Int }
   deriving (Eq,Ord,Hashable)
 
-chainIdFromText :: Monad m => Text -> m ChainId
+chainIdFromText :: MonadFail m => Text -> m ChainId
 chainIdFromText
   = maybe (fail "ChainId string was not an integer") (pure . ChainId)
   . readMaybe . T.unpack
