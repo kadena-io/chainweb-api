@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
@@ -10,6 +11,9 @@ import           Data.Aeson
 import           Data.Hashable
 import qualified Data.Text as T
 import           Text.Read (readMaybe)
+#if !MIN_VERSION_base(4,13,0)
+import           Control.Monad.Fail (MonadFail)
+#endif
 ------------------------------------------------------------------------------
 
 newtype ChainId = ChainId { unChainId :: Int }
