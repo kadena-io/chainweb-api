@@ -3,19 +3,20 @@
 module ChainwebApi.Types.Base64Url where
 
 ------------------------------------------------------------------------------
+import           Control.Error
+import           Control.Lens
 import           Data.Aeson
+import           Data.Aeson.Lens
 import           Data.ByteString (ByteString)
+import qualified Data.ByteString as BS
 import qualified Data.ByteString.Base64.URL as B64U
 import qualified Data.ByteString.Lazy as BL
 import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           Control.Error
-import           Control.Lens
-import           Data.Aeson.Lens
-import qualified Data.ByteString as BS
 import           ChainwebApi.Types.MinerData
+------------------------------------------------------------------------------
 
 newtype Base64Url a = Base64Url { fromBase64Url :: a }
   deriving (Eq,Ord,Show)
@@ -43,8 +44,8 @@ b64urlPrism = prism' (B64U.encode) (hush . decodeB64UrlNoPaddingText . T.decodeU
 
 data Block = Block
   { blockHeight :: Int
-  , blockChain :: Int
-  , blockMiner :: MinerData
+  , blockChain  :: Int
+  , blockMiner  :: MinerData
   } deriving (Eq,Ord,Show)
 
 instance FromJSON Block where
@@ -60,13 +61,13 @@ getBlocks = do
 
 magic :: ByteString -> [Block]
 magic bs = case eitherDecodeStrict bs of
-             Left _ -> error "huetonaehonu"
+             Left _  -> error "huetonaehonu"
              Right a -> a
 
 bar :: ByteString -> [Value]
 bar bs = case decodeStrict bs of
            Nothing -> error "failure decoding"
-           Just a -> map (over (key "minerData") baz) a
+           Just a  -> map (over (key "minerData") baz) a
 
 baz :: Value -> Value
 baz (String t) = either (error "aoeuhtnaoehtn") id $ eitherDecodeStrict =<< decodeB64UrlNoPaddingText t

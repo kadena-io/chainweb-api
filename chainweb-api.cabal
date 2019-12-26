@@ -42,6 +42,7 @@ library
     ChainwebApi.Types.BlockHeaderTx
     ChainwebApi.Types.BlockPayload
     ChainwebApi.Types.BytesLE
+    ChainwebApi.Types.ChainId
     ChainwebApi.Types.ChainTip
     ChainwebApi.Types.ChainwebMeta
     ChainwebApi.Types.Common
@@ -54,5 +55,3 @@ library
     ChainwebApi.Types.Sig
     ChainwebApi.Types.Signer
     ChainwebApi.Types.Transaction
-    Common.Types
-    Common.Utils

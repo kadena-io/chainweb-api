@@ -3,32 +3,32 @@
 module ChainwebApi.Types.BlockHeader where
 
 ------------------------------------------------------------------------------
-import           Data.Aeson
-import           Data.Map (Map)
-import           Data.Readable
-import           Data.Text (Text)
-import           Data.Time.Clock.POSIX
-import           Data.Word
+import Data.Aeson
+import Data.Map (Map)
+import Data.Readable
+import Data.Text (Text)
+import Data.Time.Clock.POSIX
+import Data.Word
 ------------------------------------------------------------------------------
-import           Common.Types
-import           ChainwebApi.Types.BytesLE
-import           ChainwebApi.Types.Common
-import           ChainwebApi.Types.Hash
+import ChainwebApi.Types.BytesLE
+import ChainwebApi.Types.ChainId
+import ChainwebApi.Types.Common
+import ChainwebApi.Types.Hash
 ------------------------------------------------------------------------------
 
 data BlockHeader = BlockHeader
   { _blockHeader_creationTime :: POSIXTime
-  , _blockHeader_parent :: Hash
-  , _blockHeader_height :: BlockHeight
-  , _blockHeader_hash :: Hash
-  , _blockHeader_chainId :: ChainId
-  , _blockHeader_weight :: BytesLE
-  , _blockHeader_epochStart :: POSIXTime
-  , _blockHeader_neighbors :: Map ChainId Hash
-  , _blockHeader_payloadHash :: Hash
-  , _blockHeader_chainwebVer :: Text
-  , _blockHeader_target :: BytesLE
-  , _blockHeader_nonce :: Word64
+  , _blockHeader_parent       :: Hash
+  , _blockHeader_height       :: BlockHeight
+  , _blockHeader_hash         :: Hash
+  , _blockHeader_chainId      :: ChainId
+  , _blockHeader_weight       :: BytesLE
+  , _blockHeader_epochStart   :: POSIXTime
+  , _blockHeader_neighbors    :: Map ChainId Hash
+  , _blockHeader_payloadHash  :: Hash
+  , _blockHeader_chainwebVer  :: Text
+  , _blockHeader_target       :: BytesLE
+  , _blockHeader_nonce        :: Word64
   } deriving (Eq,Ord,Show)
 
 blockDifficulty :: BlockHeader -> Double

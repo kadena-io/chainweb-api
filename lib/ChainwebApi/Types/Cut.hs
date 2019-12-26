@@ -3,21 +3,21 @@
 module ChainwebApi.Types.Cut where
 
 ------------------------------------------------------------------------------
-import           Data.Aeson
-import           Data.HashMap.Strict (HashMap)
-import           Data.Text (Text)
+import Data.Aeson
+import Data.HashMap.Strict (HashMap)
+import Data.Text (Text)
 ------------------------------------------------------------------------------
-import           Common.Types
-import           ChainwebApi.Types.ChainTip
-import           ChainwebApi.Types.Common
+import ChainwebApi.Types.ChainId
+import ChainwebApi.Types.ChainTip
+import ChainwebApi.Types.Common
 ------------------------------------------------------------------------------
 
 data Cut = Cut
-  { _cutId :: Text
-  , _cutHeight :: BlockHeight
-  , _cutWeight :: Text
+  { _cutId       :: Text
+  , _cutHeight   :: BlockHeight
+  , _cutWeight   :: Text
   , _cutInstance :: Text
-  , _cutChains :: HashMap ChainId ChainTip
+  , _cutChains   :: HashMap ChainId ChainTip
   } deriving (Eq,Ord,Show)
 
 instance FromJSON Cut where
