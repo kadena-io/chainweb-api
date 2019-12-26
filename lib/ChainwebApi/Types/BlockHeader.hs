@@ -40,13 +40,13 @@ targetToDifficulty target = (2 ^ (256 :: Int) - 1) `div` target
 
 instance FromJSON BlockHeader where
   parseJSON = withObject "BlockHeader" $ \o -> BlockHeader
-    <$> (fmap (/1000000.0) $ o .: "creationTime")
+    <$> fmap (/1000000.0) (o .: "creationTime")
     <*> o .: "parent"
     <*> o .: "height"
     <*> o .: "hash"
     <*> o .: "chainId"
     <*> o .: "weight"
-    <*> (fmap (/1000000.0) $ o .: "epochStart")
+    <*> fmap (/1000000.0) (o .: "epochStart")
     <*> o .: "adjacents"
     <*> (o .: "payloadHash")
     <*> o .: "chainwebVersion"

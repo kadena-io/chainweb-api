@@ -1,7 +1,5 @@
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE LambdaCase                 #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
 module ChainwebApi.Types.ChainId ( ChainId(..) ) where
@@ -24,7 +22,7 @@ chainIdFromText
   . readMaybe . T.unpack
 
 instance FromJSON ChainId where
-  parseJSON v = do
+  parseJSON v =
         withText "ChainId" chainIdFromText v
     <|> withScientific "ChainId" (pure . ChainId . round) v
 

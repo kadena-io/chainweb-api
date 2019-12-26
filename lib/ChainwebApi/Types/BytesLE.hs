@@ -19,7 +19,7 @@ hexBytesLE :: BytesLE -> Text
 hexBytesLE = T.decodeUtf8 . B16.encode . unBytesLE
 
 leToInteger :: ByteString -> Integer
-leToInteger bs = B.foldl' (\a b -> a * 256 + fromIntegral b) 0 bs
+leToInteger = B.foldl' (\a b -> a * 256 + fromIntegral b) 0
 
 instance FromJSON BytesLE where
   parseJSON = withText "BytesLE" $
