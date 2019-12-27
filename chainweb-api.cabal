@@ -34,21 +34,21 @@ library
     , unordered-containers  ^>=0.2
 
   exposed-modules:
-    ChainwebApi.Types.Base64Url
-    ChainwebApi.Types.BlockHeader
-    ChainwebApi.Types.BlockHeaderTx
-    ChainwebApi.Types.BlockPayload
-    ChainwebApi.Types.BytesLE
-    ChainwebApi.Types.ChainId
-    ChainwebApi.Types.ChainTip
-    ChainwebApi.Types.ChainwebMeta
-    ChainwebApi.Types.Common
-    ChainwebApi.Types.Cut
-    ChainwebApi.Types.Hash
-    ChainwebApi.Types.MinerData
-    ChainwebApi.Types.PactCommand
-    ChainwebApi.Types.Payload
-    ChainwebApi.Types.RespItems
-    ChainwebApi.Types.Sig
-    ChainwebApi.Types.Signer
-    ChainwebApi.Types.Transaction
+    Chainweb.Api.Base64Url
+    Chainweb.Api.BlockHeader
+    Chainweb.Api.BlockHeaderTx
+    Chainweb.Api.BlockPayload
+    Chainweb.Api.BytesLE
+    Chainweb.Api.ChainId
+    Chainweb.Api.ChainTip
+    Chainweb.Api.ChainwebMeta
+    Chainweb.Api.Common
+    Chainweb.Api.Cut
+    Chainweb.Api.Hash
+    Chainweb.Api.MinerData
+    Chainweb.Api.PactCommand
+    Chainweb.Api.Payload
+    Chainweb.Api.RespItems
+    Chainweb.Api.Sig
+    Chainweb.Api.Signer
+    Chainweb.Api.Transaction

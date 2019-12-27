@@ -1,14 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.BlockPayload where
+module Chainweb.Api.BlockPayload where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.Base64Url
-import ChainwebApi.Types.Hash
-import ChainwebApi.Types.MinerData
-import ChainwebApi.Types.Transaction
+import Chainweb.Api.Base64Url
+import Chainweb.Api.Hash
+import Chainweb.Api.MinerData
+import Chainweb.Api.Transaction
 ------------------------------------------------------------------------------
 
 data BlockPayload = BlockPayload

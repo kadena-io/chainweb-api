@@ -1,4 +1,4 @@
-module ChainwebApi.Types.BytesLE where
+module Chainweb.Api.BytesLE where
 
 ------------------------------------------------------------------------------
 import           Data.Aeson
@@ -8,7 +8,7 @@ import qualified Data.ByteString.Base16 as B16
 import           Data.Text (Text)
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           ChainwebApi.Types.Base64Url
+import           Chainweb.Api.Base64Url
 ------------------------------------------------------------------------------
 
 newtype BytesLE = BytesLE

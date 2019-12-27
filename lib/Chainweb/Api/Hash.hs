@@ -1,4 +1,4 @@
-module ChainwebApi.Types.Hash where
+module Chainweb.Api.Hash where
 
 ------------------------------------------------------------------------------
 import           Data.Aeson
@@ -9,7 +9,7 @@ import qualified Data.ByteString.Base64.URL as B64U
 import           Data.Text (Text)
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           ChainwebApi.Types.Base64Url
+import           Chainweb.Api.Base64Url
 ------------------------------------------------------------------------------
 
 newtype Hash = Hash { unHash :: ByteString }

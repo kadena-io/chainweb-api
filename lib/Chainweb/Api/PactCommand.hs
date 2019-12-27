@@ -1,14 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.PactCommand where
+module Chainweb.Api.PactCommand where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
 import Data.Text (Text)
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.ChainwebMeta
-import ChainwebApi.Types.Payload
-import ChainwebApi.Types.Signer
+import Chainweb.Api.ChainwebMeta
+import Chainweb.Api.Payload
+import Chainweb.Api.Signer
 ------------------------------------------------------------------------------
 
 data PactCommand = PactCommand

@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.Cut where
+module Chainweb.Api.Cut where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
 import Data.HashMap.Strict (HashMap)
 import Data.Text (Text)
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.ChainId
-import ChainwebApi.Types.ChainTip
-import ChainwebApi.Types.Common
+import Chainweb.Api.ChainId
+import Chainweb.Api.ChainTip
+import Chainweb.Api.Common
 ------------------------------------------------------------------------------
 
 data Cut = Cut

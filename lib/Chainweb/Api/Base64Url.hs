@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.Base64Url where
+module Chainweb.Api.Base64Url where
 
 ------------------------------------------------------------------------------
 import           Data.Aeson
@@ -11,7 +11,7 @@ import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           ChainwebApi.Types.MinerData
+import           Chainweb.Api.MinerData
 ------------------------------------------------------------------------------
 
 newtype Base64Url a = Base64Url { fromBase64Url :: a }

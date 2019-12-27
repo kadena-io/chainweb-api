@@ -1,4 +1,4 @@
-module ChainwebApi.Types.Common where
+module Chainweb.Api.Common where
 
 type BlockHeight = Int
 --newtype BlockHeight = BlockHeight { unBlockHeight :: Int }

@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.BlockHeaderTx where
+module Chainweb.Api.BlockHeaderTx where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
 import Data.Text (Text)
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.BlockHeader
+import Chainweb.Api.BlockHeader
 ------------------------------------------------------------------------------
 
 data BlockHeaderTx = BlockHeaderTx

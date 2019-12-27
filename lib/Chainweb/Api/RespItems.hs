@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.RespItems where
+module Chainweb.Api.RespItems where
 
 ------------------------------------------------------------------------------
 import Data.Aeson

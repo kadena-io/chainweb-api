@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.Transaction where
+module Chainweb.Api.Transaction where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.Hash
-import ChainwebApi.Types.PactCommand
-import ChainwebApi.Types.Sig
+import Chainweb.Api.Hash
+import Chainweb.Api.PactCommand
+import Chainweb.Api.Sig
 ------------------------------------------------------------------------------
 
 data Transaction = Transaction

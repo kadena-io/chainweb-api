@@ -3,7 +3,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
-module ChainwebApi.Types.ChainId ( ChainId(..) ) where
+module Chainweb.Api.ChainId ( ChainId(..) ) where
 
 ------------------------------------------------------------------------------
 import           Control.Applicative ((<|>))

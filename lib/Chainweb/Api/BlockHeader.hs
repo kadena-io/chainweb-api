@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.BlockHeader where
+module Chainweb.Api.BlockHeader where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
@@ -10,10 +10,10 @@ import Data.Text (Text)
 import Data.Time.Clock.POSIX
 import Data.Word
 ------------------------------------------------------------------------------
-import ChainwebApi.Types.BytesLE
-import ChainwebApi.Types.ChainId
-import ChainwebApi.Types.Common
-import ChainwebApi.Types.Hash
+import Chainweb.Api.BytesLE
+import Chainweb.Api.ChainId
+import Chainweb.Api.Common
+import Chainweb.Api.Hash
 ------------------------------------------------------------------------------
 
 data BlockHeader = BlockHeader

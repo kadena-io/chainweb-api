@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.ChainTip where
+module Chainweb.Api.ChainTip where
 
 ------------------------------------------------------------------------------
 import Data.Aeson

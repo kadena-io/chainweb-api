@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.Signer where
+module Chainweb.Api.Signer where
 
 ------------------------------------------------------------------------------
 import Data.Aeson

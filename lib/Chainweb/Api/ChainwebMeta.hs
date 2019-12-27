@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module ChainwebApi.Types.ChainwebMeta where
+module Chainweb.Api.ChainwebMeta where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
