@@ -8,7 +8,7 @@ import Data.Text (Text)
 ------------------------------------------------------------------------------
 
 data RespItems a = RespItems
-  { _respItems_next  :: Text
+  { _respItems_next  :: Maybe Text
   , _respItems_items :: [a]
   , _respItems_limit :: Int
   } deriving (Eq,Ord,Show)
