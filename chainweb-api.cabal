@@ -38,6 +38,7 @@ library
     Chainweb.Api.BlockHeader
     Chainweb.Api.BlockHeaderTx
     Chainweb.Api.BlockPayload
+    Chainweb.Api.BlockPayloadWithOutputs
     Chainweb.Api.BytesLE
     Chainweb.Api.ChainId
     Chainweb.Api.ChainTip
