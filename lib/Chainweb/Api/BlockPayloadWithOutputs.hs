@@ -51,7 +51,7 @@ data BlockPayloadWithOutputs = BlockPayloadWithOutputs
     , _blockPayloadWithOutputs_outputsHash :: Hash
     , _blockPayloadWithOutputs_payloadHash :: Hash
     , _blockPayloadWithOutputs_transactionsWithOutputs :: [(Transaction, TransactionOutput)]
-    , _blockPayloadWithOutputs_coinbase :: TransactionOutput
+    , _blockPayloadWithOutputs_coinbase :: Coinbase
     } deriving (Eq,Show)
 
 instance FromJSON BlockPayloadWithOutputs where
