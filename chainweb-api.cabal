@@ -28,7 +28,10 @@ library
     , bytestring            ^>=0.10
     , containers            ^>=0.6
     , hashable              >=1.2 && < 1.4
+    , lens >= 4.16
+    , lens-aeson
     , readable              ^>=0.3
+    , string-conv >= 0.1
     , text
     , time
     , unordered-containers  ^>=0.2
@@ -38,6 +41,7 @@ library
     Chainweb.Api.BlockHeader
     Chainweb.Api.BlockHeaderTx
     Chainweb.Api.BlockPayload
+    Chainweb.Api.BlockPayloadWithOutputs
     Chainweb.Api.BytesLE
     Chainweb.Api.ChainId
     Chainweb.Api.ChainTip
