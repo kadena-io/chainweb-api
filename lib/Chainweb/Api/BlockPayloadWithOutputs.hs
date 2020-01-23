@@ -27,7 +27,7 @@ data TransactionOutput = TransactionOutput
     , _toutLogs :: Maybe Hash
     , _toutMetaData :: Maybe Value
     , _toutContinuation :: Maybe Value
-    , _toutTxId :: Int
+    , _toutTxId :: Maybe Int
     } deriving (Eq, Show)
 
 instance FromJSON TransactionOutput where
