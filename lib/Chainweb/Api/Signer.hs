@@ -4,7 +4,6 @@ module Chainweb.Api.Signer where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
-import Data.Maybe
 import Data.Ord
 import Data.Text (Text)
 ------------------------------------------------------------------------------
