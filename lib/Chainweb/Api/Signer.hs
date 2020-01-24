@@ -34,4 +34,4 @@ instance FromJSON Signer where
     <$> o .:? "addr"
     <*> o .:? "scheme"
     <*> o .: "pubKey"
-    <*> fmap maybeToList (o .:? "clist")
+    <*> fmap (maybe [] id) (o .:? "clist")
