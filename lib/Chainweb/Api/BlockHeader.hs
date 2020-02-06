@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
@@ -62,9 +63,11 @@ instance FromJSON BlockHeader where
     <*> o .: "flags"
     <*> (fromText =<< (o .: "nonce"))
 
+#ifdef WITH_BLAKE2S
 powHash :: BlockHeader -> Hash
 powHash = Hash . hash 32 mempty . B.take 386 . runPut . encodeBlockHeader
 {-# INLINE powHash #-}
+#endif
 
 -- -------------------------------------------------------------------------- --
 -- Binary Encoding for BlockHeader
