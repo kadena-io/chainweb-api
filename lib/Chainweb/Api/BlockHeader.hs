@@ -1,5 +1,6 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Chainweb.Api.BlockHeader where
 
@@ -13,7 +14,6 @@ import Data.Readable
 import Data.Serialize.Get
 import Data.Serialize.Put
 import Data.Text (Text, unpack)
-import Data.Time.Clock
 import Data.Time.Clock.POSIX
 import Data.Word
 ------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ encodePosixTime :: Putter POSIXTime
 encodePosixTime = putWord64le
   . round -- This is unfortunate. We should consider changing the type of _blockHeader_creationTime to be integral
   . (* 1000000)
-  . nominalDiffTimeToSeconds
+  . realToFrac @_ @Double
 {-# INLINE encodePosixTime #-}
 
 encodeHash :: Putter Hash
@@ -155,7 +155,7 @@ decodeBlockHeader = do
 
 decodePosixTime :: Get POSIXTime
 decodePosixTime
-  = secondsToNominalDiffTime . (/ 1000000) . fromIntegral <$> getWord64le
+  = realToFrac . (/ 1000000) . fromIntegral @_ @Double <$> getWord64le
 {-# INLINE decodePosixTime #-}
 
 decodeHash :: Get Hash
