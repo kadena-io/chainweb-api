@@ -18,11 +18,11 @@ jobs:
           sudo add-apt-repository ppa:hvr/ghcjs
           sudo add-apt-repository ppa:hvr/ghc
           sudo apt-get update
-          sudo apt-get install ghcjs-8.4
-    # - name: Set Cabal version
-    #   uses: actions/setup-haskell@v1
-    #   with: 
-    #     cabal-version: 3.0
+          sudo apt-get install cabal-install-3.2 ghcjs-8.4
+    - name: Set Cabal version
+      uses: actions/setup-haskell@v1
+      with: 
+        cabal-version: 3.2
 
     # Build
     - name: Update package database
