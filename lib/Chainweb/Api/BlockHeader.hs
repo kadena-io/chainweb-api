@@ -7,7 +7,9 @@ module Chainweb.Api.BlockHeader where
 
 ------------------------------------------------------------------------------
 import Control.Monad
+#ifdef WITH_BLAKE2S
 import Crypto.Hash.BLAKE2.BLAKE2s (hash)
+#endif
 import Data.Aeson
 import qualified Data.ByteString as B (take)
 import qualified Data.Map as M (Map, fromList, assocs)
