@@ -26,12 +26,18 @@ library
     , base16-bytestring     ^>=0.1
     , base64-bytestring     ^>=1.0
     , bytestring            ^>=0.10
+    , cereal                ^>=0.5
     , containers            ^>=0.6
     , hashable              >=1.2 && < 1.4
     , readable              ^>=0.3
     , text
     , time
     , unordered-containers  ^>=0.2
+
+  if !impl(ghcjs)
+    build-depends:
+        blake2 ^>=0.3
+    cpp-options: -DWITH_BLAKE2S
 
   exposed-modules:
     Chainweb.Api.Base64Url
