@@ -1,0 +1,32 @@
+name: GHCJS build
+
+on: push
+
+jobs:
+  build:
+    name: Build master with ghcjs
+    runs-on: ubuntu-latest
+
+    steps:
+    # Setup
+    - name: Checkout repository
+      uses: actions/checkout@v1
+
+    # Haskell Setup
+    - name: Install Haskell (ubuntu)
+      run: |
+          sudo add-apt-repository ppa:hvr/ghcjs
+          sudo add-apt-repository ppa:hvr/ghc
+          sudo apt-get update
+          sudo apt-get install cabal-install-3.2 ghcjs-8.4
+    - name: Set Cabal version
+      uses: actions/setup-haskell@v1
+      with: 
+        cabal-version: 3.2
+
+    # Build
+    - name: Update package database
+      run: cabal v2-update
+    - name: Build
+      run: cabal v2-build --ghcjs -w /opt/ghcjs/8.4/bin/ghcjs
+
