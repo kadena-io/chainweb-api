@@ -6,40 +6,40 @@
 module Chainweb.Api.BlockHeader where
 
 ------------------------------------------------------------------------------
-import Control.Monad
+import           Control.Monad
 #ifdef WITH_BLAKE2S
-import Crypto.Hash.BLAKE2.BLAKE2s (hash)
+import           Crypto.Hash.BLAKE2.BLAKE2s (hash)
 #endif
-import Data.Aeson
+import           Data.Aeson
 import qualified Data.ByteString as B (take)
-import qualified Data.Map as M (Map, fromList, assocs)
-import Data.Readable
-import Data.Serialize.Get
-import Data.Serialize.Put
-import Data.Text (Text, unpack)
-import Data.Time.Clock.POSIX
-import Data.Word
+import qualified Data.Map as M (Map, assocs, fromList)
+import           Data.Readable
+import           Data.Serialize.Get
+import           Data.Serialize.Put
+import           Data.Text (Text, unpack)
+import           Data.Time.Clock.POSIX
+import           Data.Word
 ------------------------------------------------------------------------------
-import Chainweb.Api.BytesLE
-import Chainweb.Api.ChainId
-import Chainweb.Api.Common
-import Chainweb.Api.Hash
+import           Chainweb.Api.BytesLE
+import           Chainweb.Api.ChainId
+import           Chainweb.Api.Common
+import           Chainweb.Api.Hash
 ------------------------------------------------------------------------------
 
 data BlockHeader = BlockHeader
   { _blockHeader_creationTime :: POSIXTime
-  , _blockHeader_parent       :: Hash
-  , _blockHeader_height       :: BlockHeight
-  , _blockHeader_hash         :: Hash
-  , _blockHeader_chainId      :: ChainId
-  , _blockHeader_weight       :: BytesLE
-  , _blockHeader_epochStart   :: POSIXTime
-  , _blockHeader_neighbors    :: M.Map ChainId Hash
-  , _blockHeader_payloadHash  :: Hash
-  , _blockHeader_chainwebVer  :: Text
-  , _blockHeader_target       :: BytesLE
-  , _blockHeader_flags        :: Word64
-  , _blockHeader_nonce        :: Word64
+  , _blockHeader_parent :: Hash
+  , _blockHeader_height :: BlockHeight
+  , _blockHeader_hash :: Hash
+  , _blockHeader_chainId :: ChainId
+  , _blockHeader_weight :: BytesLE
+  , _blockHeader_epochStart :: POSIXTime
+  , _blockHeader_neighbors :: M.Map ChainId Hash
+  , _blockHeader_payloadHash :: Hash
+  , _blockHeader_chainwebVer :: Text
+  , _blockHeader_target :: BytesLE
+  , _blockHeader_flags :: Word64
+  , _blockHeader_nonce :: Word64
   } deriving (Eq,Ord,Show)
 
 blockDifficulty :: BlockHeader -> Double
@@ -62,7 +62,7 @@ instance FromJSON BlockHeader where
     <*> (o .: "payloadHash")
     <*> o .: "chainwebVersion"
     <*> o .: "target"
-    <*> o .: "flags"
+    <*> o .: "featureFlags"
     <*> (fromText =<< (o .: "nonce"))
 
 #ifdef WITH_BLAKE2S
@@ -190,4 +190,3 @@ decodeChainwebVersion = label "ChainwebVersion" $ getWord32le >>= \case
   0x07 -> return "testnet04"
   x -> fail $ "chainweb version " <> show x <> " does not exist"
 {-# INLINE decodeChainwebVersion #-}
-
