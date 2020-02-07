@@ -11,7 +11,9 @@ import Control.Monad
 import Crypto.Hash.BLAKE2.BLAKE2s (hash)
 #endif
 import Data.Aeson
+#ifdef WITH_BLAKE2S
 import qualified Data.ByteString as B (take)
+#endif
 import qualified Data.Map as M (Map, fromList, assocs)
 import Data.Readable
 import Data.Serialize.Get
