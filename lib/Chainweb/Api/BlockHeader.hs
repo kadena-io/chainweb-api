@@ -84,7 +84,7 @@ encodeBlockHeader h = do
   encodeHash $ _blockHeader_payloadHash h
   encodeChainId $ _blockHeader_chainId h
   encodeHashNat $ _blockHeader_weight h
-  putWord32le . fromIntegral $ _blockHeader_height h
+  putWord64le . fromIntegral $ _blockHeader_height h
   encodeChainwebVersion $ _blockHeader_chainwebVer h
   encodePosixTime $ _blockHeader_epochStart h
   putWord64le $ _blockHeader_flags h
@@ -134,7 +134,7 @@ decodeBlockHeader = do
   payloadHash <- decodeHash
   chain <- decodeChainId
   weight <- decodeHashNat
-  height <- fromIntegral <$> getWord32le
+  height <- fromIntegral <$> getWord64le
   version <- decodeChainwebVersion
   epoch <- decodePosixTime
   flags <- getWord64le
@@ -157,24 +157,24 @@ decodeBlockHeader = do
     }
 
 decodePosixTime :: Get POSIXTime
-decodePosixTime
-  = realToFrac . (/ 1000000) . fromIntegral @_ @Double <$> getWord64le
+decodePosixTime = label "PosixTime"
+    $ realToFrac . (/ 1000000) . fromIntegral @_ @Double <$> getWord64le
 {-# INLINE decodePosixTime #-}
 
 decodeHash :: Get Hash
-decodeHash = Hash <$> getBytes 32
+decodeHash = label "Hash" $ Hash <$> getByteString 32
 {-# INLINE decodeHash #-}
 
 decodeChainId :: Get ChainId
-decodeChainId = ChainId . fromIntegral <$> getWord32le
+decodeChainId = label "ChainId" $ ChainId . fromIntegral <$> getWord32le
 {-# INLINE decodeChainId #-}
 
 decodeHashNat :: Get BytesLE
-decodeHashNat = BytesLE <$> getBytes 32
+decodeHashNat = label "HashNat" $ BytesLE <$> getByteString 32
 {-# INLINE decodeHashNat #-}
 
 decodeAdjacents :: Get (M.Map ChainId Hash)
-decodeAdjacents = do
+decodeAdjacents = label "Adjacents" $ do
   len <- fromIntegral <$> getWord16le
   fmap M.fromList $ replicateM len $ (,)
     <$> decodeChainId
@@ -182,7 +182,7 @@ decodeAdjacents = do
 {-# INLINE decodeAdjacents #-}
 
 decodeChainwebVersion :: Get Text
-decodeChainwebVersion = getWord32le >>= \case
+decodeChainwebVersion = label "ChainwebVersion" $ getWord32le >>= \case
   0x01 -> return "development"
   0x05 -> return "mainnet01"
   0x07 -> return "testnet04"
