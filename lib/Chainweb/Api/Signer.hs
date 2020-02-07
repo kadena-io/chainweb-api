@@ -4,6 +4,7 @@ module Chainweb.Api.Signer where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
+import Data.Maybe (fromMaybe)
 import Data.Ord
 import Data.Text (Text)
 ------------------------------------------------------------------------------
@@ -22,7 +23,7 @@ instance FromJSON SigCapability where
     <*> o .: "args"
 
 data Signer = Signer
-  { _signer_addr   :: Maybe Text
+  { _signer_addr :: Maybe Text
   , _signer_scheme :: Maybe Text
   , _signer_pubKey :: Text
   , _signer_capList :: [SigCapability]
@@ -33,4 +34,4 @@ instance FromJSON Signer where
     <$> o .:? "addr"
     <*> o .:? "scheme"
     <*> o .: "pubKey"
-    <*> fmap (maybe [] id) (o .:? "clist")
+    <*> fmap (fromMaybe []) (o .:? "clist")
