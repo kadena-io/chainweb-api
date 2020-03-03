@@ -67,7 +67,7 @@ instance FromJSON BlockHeader where
 
 #ifdef WITH_BLAKE2S
 powHash :: BlockHeader -> Hash
-powHash = Hash . hash 32 mempty . B.take 386 . runPut . encodeBlockHeader
+powHash = Hash . hash 32 mempty . B.take 286 . runPut . encodeBlockHeader
 {-# INLINE powHash #-}
 #endif
 
