@@ -31,7 +31,7 @@ library
     , hashable              >=1.2 && < 1.4
     , readable              ^>=0.3
     , text                  ^>=1.2
-    , time                  ^>=1.8
+    , time                  >=1.8 && < 1.11
     , unordered-containers  ^>=0.2
 
   if !impl(ghcjs)
