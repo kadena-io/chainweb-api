@@ -11,12 +11,10 @@ import           Control.Monad
 import           Crypto.Hash.BLAKE2.BLAKE2s (hash)
 #endif
 import           Data.Aeson
-import qualified Data.ByteString as B (take)
-import qualified Data.Map as M (Map, assocs, fromList)
+import qualified Data.ByteString as B
+import qualified Data.Map as M
 import           Data.Readable
 import           Data.Serialize
-import           Data.Serialize.Get
-import           Data.Serialize.Put
 import           Data.Text (Text, unpack)
 import           Data.Time.Clock.POSIX
 import           Data.Word
