@@ -14,6 +14,7 @@ import           Data.Aeson
 import qualified Data.ByteString as B (take)
 import qualified Data.Map as M (Map, assocs, fromList)
 import           Data.Readable
+import           Data.Serialize
 import           Data.Serialize.Get
 import           Data.Serialize.Put
 import           Data.Text (Text, unpack)
@@ -65,10 +66,17 @@ instance FromJSON BlockHeader where
     <*> o .: "featureFlags"
     <*> (fromText =<< (o .: "nonce"))
 
+instance Serialize BlockHeader where
+  get = decodeBlockHeader
+  put = encodeBlockHeader
+
 #ifdef WITH_BLAKE2S
 powHash :: BlockHeader -> Hash
 powHash = Hash . hash 32 mempty . B.take 286 . runPut . encodeBlockHeader
 {-# INLINE powHash #-}
+#else
+powHash :: BlockHeader -> Hash
+powHash = error "powHash not defined"
 #endif
 
 -- -------------------------------------------------------------------------- --
