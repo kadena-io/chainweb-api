@@ -28,8 +28,8 @@ hexFromBytesLE :: BytesLE -> Text
 hexFromBytesLE = T.decodeUtf8 . B16.encode . unBytesLE
 
 leToInteger :: ByteString -> Integer
-leToInteger = B.foldl' (\a b -> a * 256 + fromIntegral b) 0
+leToInteger = B.foldr (\b a -> a * 256 + fromIntegral b) 0
 
 instance FromJSON BytesLE where
   parseJSON = withText "BytesLE" $
-    either fail (return . BytesLE . B.reverse) . decodeB64UrlNoPaddingText
+    either fail (return . BytesLE) . decodeB64UrlNoPaddingText
