@@ -44,10 +44,12 @@ type SearchParam = QueryParam "search" Text
 newtype Limit = Limit { unLimit :: Integer }
 
 deriving instance FromHttpApiData Limit
+deriving instance ToHttpApiData Limit
 
 newtype Offset = Offset { unOffset :: Integer }
 
 deriving instance FromHttpApiData Offset
+deriving instance ToHttpApiData Offset
 
 ------------------------------------------------------------------------------
 -- | General data structure needed for running queries with paginated results.
