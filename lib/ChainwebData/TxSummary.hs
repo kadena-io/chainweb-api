@@ -67,8 +67,8 @@ instance FromJSON TxSummary where
       <*> v .: "result"
 
 mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TxSummary
-mkTxSummary (ChainId chain) height (Hash bh) (Transaction h _ pc) =
-    TxSummary chain height (T.decodeUtf8 bh) t (T.decodeUtf8 $ unHash h) s c r
+mkTxSummary (ChainId chain) height bh (Transaction th _ pc) =
+    TxSummary chain height (hashB64U bh) t (hashB64U th) s c r
   where
     meta = _pactCommand_meta pc
     t = posixSecondsToUTCTime $ _chainwebMeta_creationTime meta
