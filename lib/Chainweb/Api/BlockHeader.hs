@@ -84,7 +84,7 @@ powHash = error "powHash not defined"
 --
 encodeBlockHeader :: Putter BlockHeader
 encodeBlockHeader h = do
-  putWord64le $ _blockHeader_nonce h
+  putWord64le $ _blockHeader_flags h
   encodePosixTime $ _blockHeader_creationTime h
   encodeHash $ _blockHeader_parent h
   encodeAdjacents $ _blockHeader_neighbors h
@@ -95,7 +95,7 @@ encodeBlockHeader h = do
   putWord64le . fromIntegral $ _blockHeader_height h
   encodeChainwebVersion $ _blockHeader_chainwebVer h
   encodePosixTime $ _blockHeader_epochStart h
-  putWord64le $ _blockHeader_flags h
+  putWord64le $ _blockHeader_nonce h
   encodeHash $ _blockHeader_hash h
 
 encodePosixTime :: Putter POSIXTime
@@ -134,7 +134,7 @@ encodeChainwebVersion v = error $ "chainweb version " <> unpack v <> " does not 
 --
 decodeBlockHeader :: Get BlockHeader
 decodeBlockHeader = do
-  nonce <- getWord64le
+  flags <- getWord64le
   time <- decodePosixTime
   parent <- decodeHash
   adjacents <- decodeAdjacents
@@ -145,7 +145,7 @@ decodeBlockHeader = do
   height <- fromIntegral <$> getWord64le
   version <- decodeChainwebVersion
   epoch <- decodePosixTime
-  flags <- getWord64le
+  nonce <- getWord64le
   blockHash <- decodeHash
 
   return BlockHeader
