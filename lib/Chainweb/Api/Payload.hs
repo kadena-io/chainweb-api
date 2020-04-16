@@ -10,7 +10,7 @@ import           Data.Text (Text)
 
 data Exec = Exec
   { _exec_code :: Text
-  , _exec_data :: Maybe Object
+  , _exec_data :: Maybe Value
   } deriving (Eq,Show)
 
 instance FromJSON Exec where
@@ -22,7 +22,7 @@ data Cont = Cont
   { _cont_pactId   :: Text
   , _cont_rollback :: Bool
   , _cont_step     :: Int
-  , _cont_data     :: Object
+  , _cont_data     :: Value
   , _cont_proof    :: Text
   } deriving (Eq,Show)
 
