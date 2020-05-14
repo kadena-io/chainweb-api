@@ -40,8 +40,9 @@ data TxSummary = TxSummary
   , _txSummary_requestKey :: Text
   , _txSummary_sender :: Text
   , _txSummary_code :: Maybe Text
+  , _txSummary_continuation :: Maybe Value
   , _txSummary_result :: TxResult
-  } deriving (Eq,Ord,Show,Generic)
+  } deriving (Eq,Show,Generic)
 
 instance ToJSON TxSummary where
     toJSON s = object
@@ -52,6 +53,7 @@ instance ToJSON TxSummary where
       , "requestKey" .= _txSummary_requestKey s
       , "sender" .= _txSummary_sender s
       , "code" .= _txSummary_code s
+      , "continuation" .= _txSummary_continuation s
       , "result" .= _txSummary_result s
       ]
 
@@ -64,16 +66,20 @@ instance FromJSON TxSummary where
       <*> v .: "requestKey"
       <*> v .: "sender"
       <*> v .: "code"
+      <*> v .: "continuation"
       <*> v .: "result"
 
 mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TxSummary
 mkTxSummary (ChainId chain) height bh (Transaction th _ pc) =
-    TxSummary chain height (hashB64U bh) t (hashB64U th) s c r
+    TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r
   where
     meta = _pactCommand_meta pc
     t = posixSecondsToUTCTime $ _chainwebMeta_creationTime meta
     s = _chainwebMeta_sender meta
-    c = case _pactCommand_payload pc of
-          ExecPayload e -> Just $ _exec_code e
-          ContPayload _ -> Nothing
+    code = case _pactCommand_payload pc of
+             ExecPayload e -> Just $ _exec_code e
+             ContPayload _ -> Nothing
+    cont = case _pactCommand_payload pc of
+             ExecPayload _ -> Nothing
+             ContPayload c -> Just $ _cont_data c
     r = TxUnexpected
