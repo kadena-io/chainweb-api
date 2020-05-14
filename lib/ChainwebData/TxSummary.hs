@@ -66,7 +66,7 @@ instance FromJSON TxSummary where
       <*> v .: "requestKey"
       <*> v .: "sender"
       <*> v .: "code"
-      <*> v .: "continuation"
+      <*> v .:? "continuation"
       <*> v .: "result"
 
 mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TxSummary
