@@ -13,6 +13,7 @@ import           Data.Time
 import           Data.Time.Clock.POSIX
 import           GHC.Generics
 ------------------------------------------------------------------------------
+import           Chainweb.Api.BlockPayloadWithOutputs
 import           Chainweb.Api.ChainId
 import           Chainweb.Api.ChainwebMeta
 import           Chainweb.Api.Common
@@ -80,4 +81,6 @@ mkTxSummary (ChainId chain) height bh (Transaction th _ pc) tout =
              ExecPayload e -> Just $ _exec_code e
              ContPayload _ -> Nothing
     cont = _toutContinuation tout
-    r = either (const TxFailed) (const TxSucceeded) $ _toutResult tout
+    r = case _toutResult tout of
+          PactResult (Left _) -> TxFailed
+          PactResult (Right _) -> TxSucceeded
