@@ -69,8 +69,8 @@ instance FromJSON TxSummary where
       <*> v .:? "continuation"
       <*> v .: "result"
 
-mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TxSummary
-mkTxSummary (ChainId chain) height bh (Transaction th _ pc) =
+mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TransactionOutput -> TxSummary
+mkTxSummary (ChainId chain) height bh (Transaction th _ pc) tout =
     TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r
   where
     meta = _pactCommand_meta pc
@@ -79,7 +79,5 @@ mkTxSummary (ChainId chain) height bh (Transaction th _ pc) =
     code = case _pactCommand_payload pc of
              ExecPayload e -> Just $ _exec_code e
              ContPayload _ -> Nothing
-    cont = case _pactCommand_payload pc of
-             ExecPayload _ -> Nothing
-             ContPayload c -> Just $ _cont_data c
-    r = TxUnexpected
+    cont = _toutContinuation tout
+    r = either (const TxFailed) (const TxSucceeded) $ _toutResult tout
