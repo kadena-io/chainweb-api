@@ -13,6 +13,7 @@ import           Data.Time
 import           Data.Time.Clock.POSIX
 import           GHC.Generics
 ------------------------------------------------------------------------------
+import           Chainweb.Api.BlockPayloadWithOutputs
 import           Chainweb.Api.ChainId
 import           Chainweb.Api.ChainwebMeta
 import           Chainweb.Api.Common
@@ -40,8 +41,9 @@ data TxSummary = TxSummary
   , _txSummary_requestKey :: Text
   , _txSummary_sender :: Text
   , _txSummary_code :: Maybe Text
+  , _txSummary_continuation :: Maybe Value
   , _txSummary_result :: TxResult
-  } deriving (Eq,Ord,Show,Generic)
+  } deriving (Eq,Show,Generic)
 
 instance ToJSON TxSummary where
     toJSON s = object
@@ -52,6 +54,7 @@ instance ToJSON TxSummary where
       , "requestKey" .= _txSummary_requestKey s
       , "sender" .= _txSummary_sender s
       , "code" .= _txSummary_code s
+      , "continuation" .= _txSummary_continuation s
       , "result" .= _txSummary_result s
       ]
 
@@ -64,16 +67,20 @@ instance FromJSON TxSummary where
       <*> v .: "requestKey"
       <*> v .: "sender"
       <*> v .: "code"
+      <*> v .:? "continuation"
       <*> v .: "result"
 
-mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TxSummary
-mkTxSummary (ChainId chain) height bh (Transaction th _ pc) =
-    TxSummary chain height (hashB64U bh) t (hashB64U th) s c r
+mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TransactionOutput -> TxSummary
+mkTxSummary (ChainId chain) height bh (Transaction th _ pc) tout =
+    TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r
   where
     meta = _pactCommand_meta pc
     t = posixSecondsToUTCTime $ _chainwebMeta_creationTime meta
     s = _chainwebMeta_sender meta
-    c = case _pactCommand_payload pc of
-          ExecPayload e -> Just $ _exec_code e
-          ContPayload _ -> Nothing
-    r = TxUnexpected
+    code = case _pactCommand_payload pc of
+             ExecPayload e -> Just $ _exec_code e
+             ContPayload _ -> Nothing
+    cont = _toutContinuation tout
+    r = case _toutResult tout of
+          PactResult (Left _) -> TxFailed
+          PactResult (Right _) -> TxSucceeded
