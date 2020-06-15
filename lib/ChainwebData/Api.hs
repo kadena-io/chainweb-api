@@ -9,6 +9,7 @@ module ChainwebData.Api where
 ------------------------------------------------------------------------------
 import           Data.Aeson
 import           Data.Proxy
+import           Data.Text (Text)
 import           GHC.Generics
 import           Servant.API
 ------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ chainwebDataApi = Proxy
 
 type ChainwebDataApi = ("txs" :> TxApi)
                   :<|> ("stats" :> Get '[JSON] ChainwebDataStats)
+                  :<|> ("coins" :> Get '[JSON] Text)
 
 type TxApi = RecentTxsApi :<|> TxSearchApi
 
