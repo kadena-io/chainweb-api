@@ -23,7 +23,7 @@ chainwebDataApi = Proxy
 
 type ChainwebDataApi = ("txs" :> TxApi)
                   :<|> ("stats" :> Get '[JSON] ChainwebDataStats)
-                  :<|> ("coins" :> Get '[JSON] Text)
+                  :<|> ("coins" :> Get '[PlainText] Text)
 
 type TxApi = RecentTxsApi :<|> TxSearchApi
 
