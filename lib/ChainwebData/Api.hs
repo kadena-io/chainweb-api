@@ -33,6 +33,7 @@ type TxSearchApi = "search" :> LimitParam :> OffsetParam :> SearchParam :> Get '
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int
   , _cds_coinsInCirculation :: Maybe Double
+  , _cds_maxPossibleCoins :: Double
   } deriving (Eq,Ord,Show,Generic)
 
 jsonOpts = defaultOptions { fieldLabelModifier = drop 5 }
