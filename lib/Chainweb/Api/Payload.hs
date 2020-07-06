@@ -23,7 +23,7 @@ data Cont = Cont
   , _cont_rollback :: Bool
   , _cont_step     :: Int
   , _cont_data     :: Value
-  , _cont_proof    :: Text
+  , _cont_proof    :: Maybe Text
   } deriving (Eq,Show)
 
 instance FromJSON Cont where
