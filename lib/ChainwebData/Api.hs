@@ -36,6 +36,7 @@ data ChainwebDataStats = ChainwebDataStats
   , _cds_maxPossibleCoins :: Double
   } deriving (Eq,Ord,Show,Generic)
 
+jsonOpts :: Options
 jsonOpts = defaultOptions { fieldLabelModifier = drop 5 }
 
 instance ToJSON ChainwebDataStats where

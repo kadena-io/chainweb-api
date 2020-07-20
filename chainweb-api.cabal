@@ -55,6 +55,7 @@ library
     Chainweb.Api.Cut
     Chainweb.Api.Hash
     Chainweb.Api.MinerData
+    Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
     Chainweb.Api.Payload
     Chainweb.Api.RespItems

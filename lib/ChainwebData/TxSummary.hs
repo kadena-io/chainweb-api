@@ -8,7 +8,6 @@ module ChainwebData.TxSummary where
 ------------------------------------------------------------------------------
 import           Data.Aeson
 import           Data.Text (Text)
-import qualified Data.Text.Encoding as T
 import           Data.Time
 import           Data.Time.Clock.POSIX
 import           GHC.Generics
