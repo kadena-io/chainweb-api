@@ -81,7 +81,7 @@ test-suite testsuite
         , base >= 4.12 && < 5
         , bytestring
         , cereal
-        , neat-interpolation >= 0.3.2 && < 0.6
+        , neat-interpolation >= 0.5 && < 0.6
         , tasty       ^>= 1.2
         , tasty-hunit ^>= 0.10
         , text
