@@ -1,6 +1,6 @@
 cabal-version:      2.2
 name:               chainweb-api
-version:            1.0.0
+version:            1.1.0
 description:        Common types for communicating with a Chainweb Node.
 homepage:           https://github.com/kadena-io/chainweb-api
 author:             Chainweb Dev Team
@@ -81,7 +81,7 @@ test-suite testsuite
         , base >= 4.12 && < 5
         , bytestring
         , cereal
-        , neat-interpolation >= 0.5 && < 0.6
+        , neat-interpolation >= 0.5
         , tasty       ^>= 1.2
         , tasty-hunit ^>= 0.10
         , text
