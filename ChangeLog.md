@@ -1,3 +1,4 @@
 # Changelog for chainweb-api
 
-## Unreleased changes
+## 1.2.0
+- Add events to TransactionOutput
