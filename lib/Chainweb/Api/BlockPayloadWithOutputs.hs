@@ -8,6 +8,7 @@ module Chainweb.Api.BlockPayloadWithOutputs where
 import Control.Applicative
 import Data.Aeson
 import Data.Bifunctor
+import Data.Maybe
 ------------------------------------------------------------------------------
 import Chainweb.Api.Base64Url
 import Chainweb.Api.Hash
@@ -28,6 +29,7 @@ data TransactionOutput = TransactionOutput
     , _toutMetaData :: Maybe Value
     , _toutContinuation :: Maybe Value
     , _toutTxId :: Maybe Int
+    , _toutEvents :: [Value]
     } deriving (Eq, Show)
 
 instance FromJSON TransactionOutput where
@@ -40,6 +42,7 @@ instance FromJSON TransactionOutput where
             <*> o .: "metaData"
             <*> o .: "continuation"
             <*> o .: "txId"
+            <*> (fromMaybe [] <$> o .:? "events")
 
 newtype Coinbase =
   Coinbase TransactionOutput
