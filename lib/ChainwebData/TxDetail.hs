@@ -1,34 +1,24 @@
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 
 module ChainwebData.TxDetail where
 
-------------------------------------------------------------------------------
-import           Data.Aeson
-import Data.Aeson.Types
-import Data.Char
-import           Data.Text (Text)
-import           Data.Time
-import           GHC.Generics
-------------------------------------------------------------------------------
+import ChainwebData.Util
+import Data.Aeson
+import Data.Text (Text)
+import Data.Time
+import GHC.Generics
 
+data TxEvent = TxEvent
+  { _txEvent_name :: Text
+  , _txEvent_params :: [Value]
+  } deriving (Eq,Show,Generic)
 
-data TxResult
-  = TxSucceeded
-  | TxFailed
-  | TxUnexpected -- Shouldn't happen...here for totality
-  deriving (Eq,Ord,Show,Read,Enum,Generic)
+instance ToJSON TxEvent where toJSON = lensyToJSON 9
+instance FromJSON TxEvent where parseJSON = lensyParseJSON 9
 
-instance ToJSON TxResult where
-    toEncoding = genericToEncoding defaultOptions
-instance FromJSON TxResult
 
 data TxDetail = TxDetail
-  {
-    _txDetail_ttl ::  Int
+  { _txDetail_ttl ::  Int
   , _txDetail_gasLimit :: Int
   , _txDetail_gasPrice :: Double
   , _txDetail_nonce :: Text
@@ -52,6 +42,7 @@ data TxDetail = TxDetail
   , _txDetail_sender :: Text
   , _txDetail_code :: Maybe Text
   , _txDetail_success :: Bool
+  , _txDetail_events :: [TxEvent]
   } deriving (Eq,Show,Generic)
 
 instance ToJSON TxDetail where
@@ -59,20 +50,3 @@ instance ToJSON TxDetail where
 
 instance FromJSON TxDetail where
     parseJSON = lensyParseJSON 10
-
-lensyToJSON
-  :: (Generic a, GToJSON Zero (Rep a)) => Int -> a -> Value
-lensyToJSON n = genericToJSON (lensyOptions n)
-
-lensyParseJSON
-  :: (Generic a, GFromJSON Zero (Rep a)) => Int -> Value -> Parser a
-lensyParseJSON n = genericParseJSON (lensyOptions n)
-
-lensyOptions :: Int -> Options
-lensyOptions n = defaultOptions { fieldLabelModifier = lensyConstructorToNiceJson n }
-
-lensyConstructorToNiceJson :: Int -> String -> String
-lensyConstructorToNiceJson n fieldName = firstToLower $ drop n fieldName
-  where
-    firstToLower (c:cs) = toLower c : cs
-    firstToLower _ = error $ "lensyConstructorToNiceJson: bad arguments: " ++ show (n,fieldName)
