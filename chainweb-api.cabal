@@ -1,6 +1,6 @@
 cabal-version:      2.2
 name:               chainweb-api
-version:            1.2.0
+version:            1.2.1
 description:        Common types for communicating with a Chainweb Node.
 homepage:           https://github.com/kadena-io/chainweb-api
 author:             Chainweb Dev Team
@@ -63,8 +63,11 @@ library
     Chainweb.Api.Signer
     Chainweb.Api.Transaction
     ChainwebData.Api
+    ChainwebData.EventDetail
     ChainwebData.Pagination
     ChainwebData.TxSummary
+    ChainwebData.TxDetail
+    ChainwebData.Util
 
 test-suite testsuite
     default-language: Haskell2010
