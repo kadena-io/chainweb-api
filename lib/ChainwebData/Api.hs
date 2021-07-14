@@ -15,6 +15,7 @@ import           Servant.API
 ------------------------------------------------------------------------------
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
+import           ChainwebData.EventDetail
 ------------------------------------------------------------------------------
 
 
