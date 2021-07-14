@@ -25,10 +25,34 @@ type ChainwebDataApi = ("txs" :> TxApi)
                   :<|> ("stats" :> Get '[JSON] ChainwebDataStats)
                   :<|> ("coins" :> Get '[PlainText] Text)
 
-type TxApi = RecentTxsApi :<|> TxSearchApi
+type TxApi
+    = RecentTxsApi
+    :<|> TxSearchApi
+    :<|> EventsApi
 
-type RecentTxsApi = "recent" :> Get '[JSON] [TxSummary]
-type TxSearchApi = "search" :> LimitParam :> OffsetParam :> SearchParam :> Get '[JSON] [TxSummary]
+type RecentTxsApi = "recent"
+    :> Get '[JSON] [TxSummary]
+
+type TxSearchApi = "search"
+    :> LimitParam
+    :> OffsetParam
+    :> SearchParam
+    :> Get '[JSON] [TxSummary]
+
+type EventParamParam = QueryParam "param" Text
+type EventRequestKeyParam = QueryParam "requestkey" Text
+type EventNameParam = QueryParam "name" Text
+type EventIndexParam = QueryParam "index" Int
+
+type EventsApi = "events"
+    :> LimitParam
+    :> OffsetParam
+    :> EventParamParam
+    :> EventRequestKeyParam
+    :> EventNameParam
+    :> EventIndexParam
+    :> Get '[JSON] [EventDetail]
+
 
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int
