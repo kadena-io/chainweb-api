@@ -11,8 +11,6 @@ import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           Chainweb.Api.MinerData
-------------------------------------------------------------------------------
 
 newtype Base64Url a = Base64Url { fromBase64Url :: a }
   deriving (Eq,Ord,Show)
@@ -29,19 +27,11 @@ decodeB64UrlNoPaddingText = B64U.decode . T.encodeUtf8 . pad
   where
     pad t = let s = T.length t `mod` 4 in t <> T.replicate ((4 - s) `mod` 4) "="
 
-data Block = Block
-  { blockHeight :: Int
-  , blockChain  :: Int
-  , blockMiner  :: MinerData
-  } deriving (Eq,Ord,Show)
+-- Copied from chainweb-node
 
-instance FromJSON Block where
-  parseJSON = withObject "Block" $ \o -> Block
-    <$> o .: "height"
-    <*> o .: "chainId"
-    <*> (parseJSON =<< fmap baz (o .: "minerData"))
+-- | Encode a binary value to a textual base64-url without padding
+-- representation.
+--
+encodeB64UrlNoPaddingText :: ByteString -> T.Text
+encodeB64UrlNoPaddingText = T.dropWhileEnd (== '=') . T.decodeUtf8 . B64U.encode
 
-baz :: Value -> Value
-baz (String t) =
-  either (error "aoeuhtnaoehtn") id $ eitherDecodeStrict =<< decodeB64UrlNoPaddingText t
-baz v = v
