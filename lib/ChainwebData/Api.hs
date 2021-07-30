@@ -1,3 +1,4 @@
+{-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingStrategies #-}
@@ -13,8 +14,10 @@ import           Data.Text (Text)
 import           GHC.Generics
 import           Servant.API
 ------------------------------------------------------------------------------
+import           ChainwebData.EventDetail
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
+import           ChainwebData.TxDetail
 ------------------------------------------------------------------------------
 
 
@@ -25,10 +28,44 @@ type ChainwebDataApi = ("txs" :> TxApi)
                   :<|> ("stats" :> Get '[JSON] ChainwebDataStats)
                   :<|> ("coins" :> Get '[PlainText] Text)
 
-type TxApi = RecentTxsApi :<|> TxSearchApi
+type TxApi
+    = RecentTxsApi
+    :<|> TxSearchApi
+    :<|> EventsApi
+    :<|> TxDetailApi
 
-type RecentTxsApi = "recent" :> Get '[JSON] [TxSummary]
-type TxSearchApi = "search" :> LimitParam :> OffsetParam :> SearchParam :> Get '[JSON] [TxSummary]
+type RecentTxsApi = "recent"
+    :> Get '[JSON] [TxSummary]
+
+type TxSearchApi = "search"
+    :> LimitParam
+    :> OffsetParam
+    :> SearchParam
+    :> Get '[JSON] [TxSummary]
+
+newtype RequestKey = RequestKey Text
+deriving instance FromHttpApiData RequestKey
+deriving instance ToHttpApiData RequestKey
+
+type TxDetailApi = "tx"
+    :> QueryParam "requestkey" RequestKey
+    :> Get '[JSON] TxDetail
+
+newtype EventParam = EventParam Text
+deriving instance FromHttpApiData EventParam
+deriving instance ToHttpApiData EventParam
+
+newtype EventName = EventName Text
+deriving instance FromHttpApiData EventName
+deriving instance ToHttpApiData EventName
+
+type EventsApi = "events"
+    :> LimitParam
+    :> OffsetParam
+    :> SearchParam
+    :> QueryParam "param" EventParam
+    :> QueryParam "name" EventName
+    :> Get '[JSON] [EventDetail]
 
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int
