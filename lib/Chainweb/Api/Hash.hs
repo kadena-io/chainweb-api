@@ -25,4 +25,5 @@ hashHex :: Hash -> Text
 hashHex = T.decodeUtf8 . B16.encode . unHash
 
 hashB64U :: Hash -> Text
-hashB64U = T.decodeUtf8 . B64U.encode . unHash
+hashB64U = encodeB64UrlNoPaddingText . unHash
+
