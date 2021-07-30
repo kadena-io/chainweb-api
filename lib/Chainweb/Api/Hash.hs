@@ -5,7 +5,6 @@ import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.ByteString (ByteString)
 import qualified Data.ByteString.Base16 as B16
-import qualified Data.ByteString.Base64.URL as B64U
 import           Data.Text (Text)
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------

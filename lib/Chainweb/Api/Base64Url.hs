@@ -11,8 +11,6 @@ import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
-import           Chainweb.Api.MinerData
-------------------------------------------------------------------------------
 
 newtype Base64Url a = Base64Url { fromBase64Url :: a }
   deriving (Eq,Ord,Show)
@@ -34,6 +32,6 @@ decodeB64UrlNoPaddingText = B64U.decode . T.encodeUtf8 . pad
 -- | Encode a binary value to a textual base64-url without padding
 -- representation.
 --
-encodeB64UrlNoPaddingText :: B.ByteString -> T.Text
+encodeB64UrlNoPaddingText :: ByteString -> T.Text
 encodeB64UrlNoPaddingText = T.dropWhileEnd (== '=') . T.decodeUtf8 . B64U.encode
 
