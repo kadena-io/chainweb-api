@@ -17,6 +17,12 @@ data SigCapability = SigCapability
 instance Ord SigCapability where
   compare = comparing _scName
 
+instance ToJSON SigCapability where
+  toJSON (SigCapability nm args) = object
+    [ "name" .= nm
+    , "args" .= args
+    ]
+
 instance FromJSON SigCapability where
   parseJSON = withObject "SigCapability" $ \o -> SigCapability
     <$> o .: "name"
