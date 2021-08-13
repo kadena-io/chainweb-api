@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Chainweb.Api.Payload where
 
@@ -13,6 +14,12 @@ data Exec = Exec
   , _exec_data :: Maybe Value
   } deriving (Eq,Show)
 
+instance ToJSON Exec where
+  toJSON Exec{..} = object
+    [ "code" .= _exec_code
+    , "data" .= _exec_data
+    ]
+
 instance FromJSON Exec where
   parseJSON = withObject "Exec" $ \o -> Exec
     <$> o .: "code"
@@ -26,6 +33,15 @@ data Cont = Cont
   , _cont_proof    :: Maybe Text
   } deriving (Eq,Show)
 
+instance ToJSON Cont where
+  toJSON Cont{..} = object
+    [ "pactId" .= _cont_pactId
+    , "rollback" .= _cont_rollback
+    , "step" .= _cont_step
+    , "data" .= _cont_data
+    , "proof" .= _cont_proof
+    ]
+
 instance FromJSON Cont where
   parseJSON = withObject "Cont" $ \o -> Cont
     <$> o .: "pactId"
@@ -36,6 +52,10 @@ instance FromJSON Cont where
 
 data Payload = ExecPayload Exec | ContPayload Cont
   deriving (Eq,Show)
+
+instance ToJSON Payload where
+  toJSON (ExecPayload exec) = Object $ "exec" .= toJSON exec
+  toJSON (ContPayload cont) = Object $ "cont" .= toJSON cont
 
 instance FromJSON Payload where
   parseJSON = withObject "Payload" $ \o -> case HM.lookup "exec" o of

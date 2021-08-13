@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Chainweb.Api.PactCommand where
 
@@ -17,6 +18,14 @@ data PactCommand = PactCommand
   , _pactCommand_meta    :: ChainwebMeta
   , _pactCommand_nonce   :: Text
   } deriving (Eq,Show)
+
+instance ToJSON PactCommand where
+  toJSON PactCommand{..} = object
+    [ "payload" .= _pactCommand_payload
+    , "signers" .= _pactCommand_signers
+    , "meta" .= _pactCommand_meta
+    , "nonce" .= _pactCommand_nonce
+    ]
 
 instance FromJSON PactCommand where
   parseJSON = withObject "PactCommand" $ \o -> PactCommand

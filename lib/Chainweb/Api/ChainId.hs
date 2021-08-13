@@ -25,10 +25,17 @@ chainIdFromText
   = maybe (fail "ChainId string was not an integer") (pure . ChainId)
   . readMaybe . T.unpack
 
+instance ToJSON ChainId where
+  toJSON = toJSON
+
 instance FromJSON ChainId where
   parseJSON v =
         withText "ChainId" chainIdFromText v
     <|> withScientific "ChainId" (pure . ChainId . round) v
+
+--TODO: Is this right?
+instance ToJSONKey ChainId where
+  toJSONKey = toJSONKey
 
 instance FromJSONKey ChainId where
   fromJSONKey = FromJSONKeyTextParser chainIdFromText

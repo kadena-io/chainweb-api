@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Chainweb.Api.ChainwebMeta where
 
@@ -16,6 +17,16 @@ data ChainwebMeta = ChainwebMeta
   , _chainwebMeta_gasPrice     :: Double
   , _chainwebMeta_sender       :: Text
   } deriving (Eq,Ord,Show)
+
+instance ToJSON ChainwebMeta where
+  toJSON ChainwebMeta{..} = object
+    [ "chainId" .= _chainwebMeta_chainId
+    , "creationTime" .= _chainwebMeta_creationTime
+    , "ttl" .= _chainwebMeta_ttl
+    , "gasLimit" .= _chainwebMeta_gasLimit
+    , "gasPrice" .= _chainwebMeta_gasPrice
+    , "sender" .= _chainwebMeta_sender
+    ]
 
 instance FromJSON ChainwebMeta where
   parseJSON = withObject "ChainwebMeta" $ \o -> ChainwebMeta

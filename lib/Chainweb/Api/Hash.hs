@@ -15,6 +15,9 @@ import           Chainweb.Api.Base64Url
 newtype Hash = Hash { unHash :: ByteString }
   deriving (Eq,Ord,Show,Read)
 
+instance ToJSON Hash where
+  toJSON hash = String $ hashB64U hash
+
 instance FromJSON Hash where
   parseJSON (String t) =
     either (\e -> fail $ "Base64Url parse failed: " <> e) (return . Hash) $
