@@ -15,6 +15,9 @@ import qualified Data.Text.Encoding as T
 newtype Base64Url a = Base64Url { fromBase64Url :: a }
   deriving (Eq,Ord,Show)
 
+instance ToJSON a => ToJSON (Base64Url a) where
+  toJSON (Base64Url a) = toJSON a
+
 instance FromJSON a => FromJSON (Base64Url a) where
   parseJSON = withText "Base64Url" $ \t ->
     case decodeB64UrlNoPaddingText t of

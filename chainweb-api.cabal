@@ -31,10 +31,13 @@ library
     , data-default          ^>=0.7
     , hashable              >=1.2 && < 1.4
     , readable              ^>=0.3
+    , scientific
     , servant               ^>=0.16
     , text                  ^>=1.2
     , time                  >=1.8 && < 1.11
     , unordered-containers  ^>=0.2
+    , vector
+    , lens
 
   if !impl(ghcjs)
     build-depends:
@@ -48,6 +51,7 @@ library
     Chainweb.Api.BlockPayload
     Chainweb.Api.BlockPayloadWithOutputs
     Chainweb.Api.BytesLE
+    Chainweb.Api.CommandResult
     Chainweb.Api.ChainId
     Chainweb.Api.ChainTip
     Chainweb.Api.ChainwebMeta
@@ -57,6 +61,7 @@ library
     Chainweb.Api.MinerData
     Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
+    Chainweb.Api.PactTypes
     Chainweb.Api.Payload
     Chainweb.Api.RespItems
     Chainweb.Api.Sig
@@ -68,6 +73,7 @@ library
     ChainwebData.TxSummary
     ChainwebData.TxDetail
     ChainwebData.Util
+    Crypto.Hash.Blake2Native
 
 test-suite testsuite
     default-language: Haskell2010
