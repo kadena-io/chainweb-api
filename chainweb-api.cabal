@@ -21,8 +21,8 @@ library
     -Wincomplete-uni-patterns -Widentities
 
   build-depends:
-    , aeson                 ^>=1.4
-    , base                  >=4.7  && <5
+    , aeson                 >= 1.4 && < 1.6
+    , base                  >= 4.7  && < 5
     , base16-bytestring     ^>=0.1
     , base64-bytestring     ^>=1.0
     , bytestring            ^>=0.10
