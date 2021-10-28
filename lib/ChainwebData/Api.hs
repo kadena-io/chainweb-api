@@ -33,6 +33,7 @@ type TxApi
     :<|> TxSearchApi
     :<|> EventsApi
     :<|> TxDetailApi
+    :<|> AccountApi
 
 type RecentTxsApi = "recent"
     :> Get '[JSON] [TxSummary]
@@ -65,6 +66,14 @@ type EventsApi = "events"
     :> SearchParam
     :> QueryParam "param" EventParam
     :> QueryParam "name" EventName
+    :> Get '[JSON] [EventDetail]
+
+type AccountApi = "account"
+    :> Capture "token" Text
+    :> Capture "account-name" Text
+    :> Capture "chain" Int
+    :> LimitParam
+    :> OffsetParam
     :> Get '[JSON] [EventDetail]
 
 data ChainwebDataStats = ChainwebDataStats
