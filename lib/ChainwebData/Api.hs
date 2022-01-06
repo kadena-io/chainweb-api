@@ -49,7 +49,7 @@ deriving instance ToHttpApiData RequestKey
 
 type TxDetailApi = "tx"
     :> QueryParam "requestkey" RequestKey
-    :> Get '[JSON] TxDetail
+    :> Get '[JSON] [TxDetail]
 
 newtype EventParam = EventParam Text
 deriving instance FromHttpApiData EventParam
