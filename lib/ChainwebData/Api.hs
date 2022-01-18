@@ -52,7 +52,7 @@ type TxDetailApi = "tx"
     :> QueryParam "requestkey" RequestKey
     :> Get '[JSON] TxDetail
 
-type TxsDetailApi = "tx"
+type TxsDetailApi = "txs"
     :> QueryParam "requestkey" RequestKey
     :> Get '[JSON] [TxDetail]
 
