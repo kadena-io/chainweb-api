@@ -33,6 +33,7 @@ type TxApi
     :<|> TxSearchApi
     :<|> EventsApi
     :<|> TxDetailApi
+    :<|> TxsDetailApi
 
 type RecentTxsApi = "recent"
     :> Get '[JSON] [TxSummary]
@@ -48,6 +49,10 @@ deriving instance FromHttpApiData RequestKey
 deriving instance ToHttpApiData RequestKey
 
 type TxDetailApi = "tx"
+    :> QueryParam "requestkey" RequestKey
+    :> Get '[JSON] TxDetail
+
+type TxsDetailApi = "tx"
     :> QueryParam "requestkey" RequestKey
     :> Get '[JSON] [TxDetail]
 
