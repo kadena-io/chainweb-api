@@ -21,7 +21,9 @@ library
     -Wincomplete-uni-patterns -Widentities
 
   build-depends:
+      Decimal               >= 0.4.2 && < 0.6
     , aeson                 ^>=1.4
+    , attoparsec            >= 0.13.0.2 && < 0.15
     , base                  >=4.7  && <5
     , base16-bytestring     ^>=0.1
     , base64-bytestring     ^>=1.0
@@ -57,6 +59,7 @@ library
     Chainweb.Api.MinerData
     Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
+    Chainweb.Api.ParsedNumbers
     Chainweb.Api.Payload
     Chainweb.Api.RespItems
     Chainweb.Api.Sig
