@@ -18,7 +18,7 @@ import           Text.Read (readMaybe)
 -- | JSON serialization for 'readDecimal' and public meta info;
 -- accepts both a String version (parsed as a Pact decimal) or
 -- a Number.
-newtype ParsedDecimal = ParsedDecimal Decimal
+newtype ParsedDecimal = ParsedDecimal { unParsedDecimal :: Decimal }
   deriving (Eq,Ord,Num,Real,RealFrac,Fractional,Generic)
 
 instance FromJSON ParsedDecimal where
@@ -38,7 +38,7 @@ instance Show ParsedDecimal where
 -- | JSON serialization for 'readInteger' and public meta info;
 -- accepts both a String version (parsed as a Pact integer),
 -- a Number, or a PactValue { "int": ... } integer
-newtype ParsedInteger = ParsedInteger Integer
+newtype ParsedInteger = ParsedInteger { unParsedInteger :: Integer }
   deriving (Eq,Show,Ord,Num,Real,Enum,Integral,Generic)
 
 instance FromJSON ParsedInteger where
