@@ -64,12 +64,17 @@ newtype EventName = EventName Text
 deriving instance FromHttpApiData EventName
 deriving instance ToHttpApiData EventName
 
+newtype EventModuleName = EventModuleName Text
+deriving instance FromHttpApiData EventModuleName
+deriving instance ToHttpApiData EventModuleName
+
 type EventsApi = "events"
     :> LimitParam
     :> OffsetParam
     :> SearchParam
     :> QueryParam "param" EventParam
     :> QueryParam "name" EventName
+    :> QueryParam "modulename" EventModuleName
     :> Get '[JSON] [EventDetail]
 
 data ChainwebDataStats = ChainwebDataStats
