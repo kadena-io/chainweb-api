@@ -14,6 +14,7 @@ import           Data.Text (Text)
 import           GHC.Generics
 import           Servant.API
 ------------------------------------------------------------------------------
+import           Chainweb.Api.Common
 import           ChainwebData.EventDetail
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
@@ -75,6 +76,7 @@ type EventsApi = "events"
     :> QueryParam "param" EventParam
     :> QueryParam "name" EventName
     :> QueryParam "modulename" EventModuleName
+    :> QueryParam "minheight" BlockHeight
     :> Get '[JSON] [EventDetail]
 
 data ChainwebDataStats = ChainwebDataStats
