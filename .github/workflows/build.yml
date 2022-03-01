@@ -39,6 +39,8 @@ jobs:
     # Build
     - name: Update package database
       run: cabal v2-update
+    - name: List installed packages
+      run: ghc-pkg list
     - name: Install build dependencies
       run: cabal v2-build --only-dependencies
     - name: Build
