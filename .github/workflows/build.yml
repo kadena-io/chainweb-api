@@ -31,7 +31,7 @@ jobs:
         curl -sL https://haskell.futurice.com/haskell-on-macos.py | python3 - --make-dirs --paths.d --ghc-alias=${{ matrix.ghc }} --cabal-alias=3.0.0.0 install ghc-${{ matrix.ghc }} cabal-install-3.0.0.0
         ln -s /opt/cabal/3.0.0.0 /opt/cabal/3.0
     - name: Set GHC and Cabal version (ubuntu, macOS)
-      uses: actions/setup-haskell@v1
+      uses: actions/setup-haskell@v1.2.3
       with:
         ghc-version: ${{ matrix.ghc }}
         cabal-version: ${{ matrix.cabal }}
