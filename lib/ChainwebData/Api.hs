@@ -14,6 +14,7 @@ import           Data.Text (Text)
 import           GHC.Generics
 import           Servant.API
 ------------------------------------------------------------------------------
+import           Chainweb.Api.Common
 import           ChainwebData.EventDetail
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
@@ -33,6 +34,7 @@ type TxApi
     :<|> TxSearchApi
     :<|> EventsApi
     :<|> TxDetailApi
+    :<|> TxsDetailApi
 
 type RecentTxsApi = "recent"
     :> Get '[JSON] [TxSummary]
@@ -51,6 +53,10 @@ type TxDetailApi = "tx"
     :> QueryParam "requestkey" RequestKey
     :> Get '[JSON] TxDetail
 
+type TxsDetailApi = "txs"
+    :> QueryParam "requestkey" RequestKey
+    :> Get '[JSON] [TxDetail]
+
 newtype EventParam = EventParam Text
 deriving instance FromHttpApiData EventParam
 deriving instance ToHttpApiData EventParam
@@ -59,12 +65,18 @@ newtype EventName = EventName Text
 deriving instance FromHttpApiData EventName
 deriving instance ToHttpApiData EventName
 
+newtype EventModuleName = EventModuleName Text
+deriving instance FromHttpApiData EventModuleName
+deriving instance ToHttpApiData EventModuleName
+
 type EventsApi = "events"
     :> LimitParam
     :> OffsetParam
     :> SearchParam
     :> QueryParam "param" EventParam
     :> QueryParam "name" EventName
+    :> QueryParam "modulename" EventModuleName
+    :> QueryParam "minheight" BlockHeight
     :> Get '[JSON] [EventDetail]
 
 data ChainwebDataStats = ChainwebDataStats

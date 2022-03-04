@@ -11,34 +11,45 @@ jobs:
       matrix:
         ghc: ['8.6.5', '8.8.2']
         cabal: ['3.0']
-        os: ['ubuntu-16.04', 'ubuntu-18.04', 'macOS-latest']
+        os: ['ubuntu-18.04', 'ubuntu-20.04', 'macOS-latest']
 
     steps:
     # Setup
     - name: Checkout repository
       uses: actions/checkout@v1
-
     # Haskell Setup
-    - name: Install Haskell (ubuntu)
-      if: contains(matrix.os, 'ubuntu')
-      run: |
-          sudo add-apt-repository ppa:hvr/ghc
-          sudo apt-get update
-          sudo apt-get install ghc-${{ matrix.ghc }}
-    - name: Install Haskell (macOS)
-      if: contains(matrix.os, 'macOS')
-      run: |
-        curl -sL https://haskell.futurice.com/haskell-on-macos.py | python3 - --make-dirs --paths.d --ghc-alias=${{ matrix.ghc }} --cabal-alias=3.0.0.0 install ghc-${{ matrix.ghc }} cabal-install-3.0.0.0
-        ln -s /opt/cabal/3.0.0.0 /opt/cabal/3.0
-    - name: Set GHC and Cabal version (ubuntu, macOS)
-      uses: actions/setup-haskell@v1
+    - name: Install GHC and Cabal
+      uses: haskell/actions/setup@v1.2.3
       with:
-        ghc-version: ${{ matrix.ghc }}
-        cabal-version: ${{ matrix.cabal }}
+         ghc-version: ${{ matrix.ghc }}
+         cabal-version: ${{ matrix.cabal }}
+    - name: Confirm GHC and Cabal installation
+      run: |
+        ghc --version
+        cabal --version
+    # # Haskell Setup
+    # - name: Install Haskell (ubuntu)
+    #   if: contains(matrix.os, 'ubuntu')
+    #   run: |
+    #       sudo add-apt-repository ppa:hvr/ghc
+    #       sudo apt-get update
+    #       sudo apt-get install ghc-${{ matrix.ghc }}
+    # - name: Install Haskell (macOS)
+    #   if: contains(matrix.os, 'macOS')
+    #   run: |
+    #     curl -sL https://haskell.futurice.com/haskell-on-macos.py | python3 - --make-dirs --paths.d --ghc-alias=${{ matrix.ghc }} --cabal-alias=3.0.0.0 install ghc-${{ matrix.ghc }} cabal-install-3.0.0.0
+    #     ln -s /opt/cabal/3.0.0.0 /opt/cabal/3.0
+    # - name: Set GHC and Cabal version (ubuntu, macOS)
+    #   uses: actions/setup-haskell@v1.2.3
+    #   with:
+    #     ghc-version: ${{ matrix.ghc }}
+    #     cabal-version: ${{ matrix.cabal }}
 
     # Build
     - name: Update package database
       run: cabal v2-update
+    - name: List installed packages
+      run: ghc-pkg list
     - name: Install build dependencies
       run: cabal v2-build --only-dependencies
     - name: Build
