@@ -59,6 +59,7 @@ library
     Chainweb.Api.Cut
     Chainweb.Api.Guard
     Chainweb.Api.Hash
+    Chainweb.Api.LocalResult
     Chainweb.Api.MinerData
     Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
