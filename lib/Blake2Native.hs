@@ -15,8 +15,9 @@ module Blake2Native where
 import Data.Word
 import Data.Bits
 import Data.ByteString as B (ByteString,index,unpack,pack,length,take,splitAt,null,replicate)
+import Data.Function
+import Data.Functor
 import Data.Vector as V (Vector,(//),(!),fromList,(++))
-import Control.Lens ((&),(<&>))
 import Prelude as P hiding (last)
 
 type V = Vector
