@@ -4,6 +4,7 @@ module Chainweb.Api.Guard where
 
 ------------------------------------------------------------------------------
 import           Data.Aeson
+import           Data.Set (Set)
 import           Data.Text (Text)
 ------------------------------------------------------------------------------
 import           Chainweb.Api.Base64Url
@@ -15,7 +16,7 @@ data Guard
   | GKeySetRef Text
   | GModule ModuleGuard
   | GUser UserGuard
-  deriving (Eq,Ord,Show,Generic)
+  deriving (Eq,Ord,Show)
 
 keyNamef = "keysetref"
 
@@ -39,7 +40,7 @@ instance FromJSON Guard where
 data KeySet = KeySet
   { _ksKeys :: Set Text
   , _ksPredFun :: Text
-  } deriving (Eq,Generic,Show,Ord)
+  } deriving (Eq,Show,Ord)
 
 -- | allow `{ "keys": [...], "pred": "..." }`, `{ "keys": [...] }`, and just `[...]`,
 -- | the latter cases defaulting to "keys-all"
@@ -58,7 +59,7 @@ instance ToJSON KeySet where
 data PactGuard = PactGuard
   { _pgPactId :: Text
   , _pgName :: Text
-  } deriving (Eq,Ord,Generic,Show)
+  } deriving (Eq,Ord,Show)
 
 instance ToJSON PactGuard where
     toJSON (PactGuard pid nm) = object
@@ -74,7 +75,7 @@ instance FromJSON PactGuard where
 data ModuleGuard = ModuleGuard
   { _mgModuleName :: Text
   , _mgName :: Text
-  } deriving (Eq,Ord,Generic,Show)
+  } deriving (Eq,Ord,Show)
 
 instance ToJSON ModuleGuard where
     toJSON (ModuleGuard mn n) = object
@@ -90,7 +91,7 @@ instance FromJSON ModuleGuard where
 data UserGuard = UserGuard
   { _ugFun :: Text
   , _ugArgs :: [Value]
-  } deriving (Eq,Ord,Generic,Show)
+  } deriving (Eq,Ord,Show)
 
 instance ToJSON UserGuard where
     toJSON (UserGuard fun args) = object
