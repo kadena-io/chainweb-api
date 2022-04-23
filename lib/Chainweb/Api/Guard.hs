@@ -1,3 +1,5 @@
+{-# LANGUAGE LambdaCase #-}
+
 module Chainweb.Api.Guard where
 
 ------------------------------------------------------------------------------
