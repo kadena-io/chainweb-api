@@ -9,11 +9,12 @@ import Data.Decimal
 import Data.Text (Text)
 import Data.Time.Clock.POSIX
 ------------------------------------------------------------------------------
+import Chainweb.Api.ChainId
 import Chainweb.Api.ParsedNumbers
 ------------------------------------------------------------------------------
 
 data ChainwebMeta = ChainwebMeta
-  { _chainwebMeta_chainId      :: Text
+  { _chainwebMeta_chainId      :: ChainId
   , _chainwebMeta_creationTime :: POSIXTime
   , _chainwebMeta_ttl          :: Int
   , _chainwebMeta_gasLimit     :: Int
@@ -23,7 +24,7 @@ data ChainwebMeta = ChainwebMeta
 
 instance ToJSON ChainwebMeta where
   toJSON ChainwebMeta{..} = object
-    [ "chainId" .= _chainwebMeta_chainId
+    [ "chainId" .= show (unChainId _chainwebMeta_chainId)
     , "creationTime" .= _chainwebMeta_creationTime
     , "ttl" .= _chainwebMeta_ttl
     , "gasLimit" .= _chainwebMeta_gasLimit
