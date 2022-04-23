@@ -1,13 +1,14 @@
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Chainweb.Api.Guard where
 
 ------------------------------------------------------------------------------
+import           Control.Applicative
 import           Data.Aeson
+import           Data.Maybe
 import           Data.Set (Set)
 import           Data.Text (Text)
-------------------------------------------------------------------------------
-import           Chainweb.Api.Base64Url
 ------------------------------------------------------------------------------
 
 data Guard
@@ -16,8 +17,9 @@ data Guard
   | GKeySetRef Text
   | GModule ModuleGuard
   | GUser UserGuard
-  deriving (Eq,Ord,Show)
+  deriving (Eq,Show)
 
+keyNamef :: Text
 keyNamef = "keysetref"
 
 instance ToJSON Guard where
@@ -29,10 +31,10 @@ instance ToJSON Guard where
     (GUser g) -> toJSON g
 
 instance FromJSON Guard where
-  parseJSON =
+  parseJSON v =
     (GKeySet <$> parseJSON v) <|>
     (withObject "KeySetRef" $ \o ->
-        GKeySetRef . KeySetName <$> o .: keyNamef) v <|>
+        GKeySetRef <$> o .: keyNamef) v <|>
     (GPact <$> parseJSON v) <|>
     (GModule <$> parseJSON v) <|>
     (GUser <$> parseJSON v)
@@ -40,7 +42,7 @@ instance FromJSON Guard where
 data KeySet = KeySet
   { _ksKeys :: Set Text
   , _ksPredFun :: Text
-  } deriving (Eq,Show,Ord)
+  } deriving (Eq,Show)
 
 -- | allow `{ "keys": [...], "pred": "..." }`, `{ "keys": [...] }`, and just `[...]`,
 -- | the latter cases defaulting to "keys-all"
@@ -59,7 +61,7 @@ instance ToJSON KeySet where
 data PactGuard = PactGuard
   { _pgPactId :: Text
   , _pgName :: Text
-  } deriving (Eq,Ord,Show)
+  } deriving (Eq,Show)
 
 instance ToJSON PactGuard where
     toJSON (PactGuard pid nm) = object
@@ -75,7 +77,7 @@ instance FromJSON PactGuard where
 data ModuleGuard = ModuleGuard
   { _mgModuleName :: Text
   , _mgName :: Text
-  } deriving (Eq,Ord,Show)
+  } deriving (Eq,Show)
 
 instance ToJSON ModuleGuard where
     toJSON (ModuleGuard mn n) = object
@@ -91,7 +93,7 @@ instance FromJSON ModuleGuard where
 data UserGuard = UserGuard
   { _ugFun :: Text
   , _ugArgs :: [Value]
-  } deriving (Eq,Ord,Show)
+  } deriving (Eq,Show)
 
 instance ToJSON UserGuard where
     toJSON (UserGuard fun args) = object
