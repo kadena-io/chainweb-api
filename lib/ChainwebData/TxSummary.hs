@@ -70,7 +70,7 @@ instance FromJSON TxSummary where
       <*> v .: "result"
 
 mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TransactionOutput -> TxSummary
-mkTxSummary (ChainId chain) height bh (Transaction th _ pc) tout =
+mkTxSummary (ChainId chain) height bh (Transaction th _ pc _) tout =
     TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r
   where
     meta = _pactCommand_meta pc
