@@ -17,6 +17,7 @@ data PactCommand = PactCommand
   , _pactCommand_signers :: [Signer]
   , _pactCommand_meta    :: ChainwebMeta
   , _pactCommand_nonce   :: Text
+  , _pactCommand_network :: Maybe Text
   } deriving (Eq,Show)
 
 instance ToJSON PactCommand where
@@ -25,6 +26,7 @@ instance ToJSON PactCommand where
     , "signers" .= _pactCommand_signers
     , "meta" .= _pactCommand_meta
     , "nonce" .= _pactCommand_nonce
+    , "networkId" .= _pactCommand_network
     ]
 
 instance FromJSON PactCommand where
@@ -33,3 +35,4 @@ instance FromJSON PactCommand where
     <*> o .: "signers"
     <*> o .: "meta"
     <*> o .: "nonce"
+    <*> o .: "networkId"
