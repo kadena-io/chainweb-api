@@ -45,7 +45,6 @@ library
     cpp-options: -DWITH_BLAKE2S
 
   exposed-modules:
-    Blake2Native
     Chainweb.Api.Base64Url
     Chainweb.Api.BlockHeader
     Chainweb.Api.BlockHeaderTx
