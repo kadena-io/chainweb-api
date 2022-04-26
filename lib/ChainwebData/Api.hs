@@ -16,6 +16,7 @@ import           Servant.API
 ------------------------------------------------------------------------------
 import           Chainweb.Api.Common
 import           ChainwebData.EventDetail
+import           ChainwebData.AccountDetail
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
 import           ChainwebData.TxDetail
@@ -35,6 +36,7 @@ type TxApi
     :<|> EventsApi
     :<|> TxDetailApi
     :<|> TxsDetailApi
+    :<|> AccountApi
 
 type RecentTxsApi = "recent"
     :> Get '[JSON] [TxSummary]
@@ -78,6 +80,14 @@ type EventsApi = "events"
     :> QueryParam "modulename" EventModuleName
     :> QueryParam "minheight" BlockHeight
     :> Get '[JSON] [EventDetail]
+
+type AccountApi = "account"
+  :> Capture "token" Text
+  :> Capture "account-name" Text
+  :> Capture "chain" Int
+  :> LimitParam
+  :> OffsetParam
+  :> Get '[JSON] [AccountDetail]
 
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int

@@ -10,6 +10,7 @@ import Data.Text (Text)
 import Chainweb.Api.Hash
 import Chainweb.Api.PactCommand
 import Chainweb.Api.Sig
+import Crypto.Hash.Blake2Native
 ------------------------------------------------------------------------------
 
 data Transaction = Transaction
@@ -18,6 +19,13 @@ data Transaction = Transaction
   , _transaction_cmd  :: PactCommand
   , _transaction_cmdStr :: Text
   } deriving (Eq,Show)
+
+mkTransaction :: PactCommand -> [Sig] -> Either String Transaction
+mkTransaction pc sigs = do
+    h <- blake2b 32 mempty cmdBytes
+    pure $ Transaction (Hash h) sigs pc
+  where
+    cmdBytes = BSL.toStrict $ encode pc
 
 instance ToJSON Transaction where
   toJSON Transaction{..} = object
