@@ -27,7 +27,7 @@ instance ToJSON ChainwebMeta where
     , "creationTime" .= _chainwebMeta_creationTime
     , "ttl" .= _chainwebMeta_ttl
     , "gasLimit" .= _chainwebMeta_gasLimit
-    , "gasPrice" .= ParsedDecimal _chainwebMeta_gasPrice
+    , "gasPrice" .= _chainwebMeta_gasPrice
     , "sender" .= _chainwebMeta_sender
     ]
 

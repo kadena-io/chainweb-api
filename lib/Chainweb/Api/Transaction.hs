@@ -5,7 +5,9 @@ module Chainweb.Api.Transaction where
 
 ------------------------------------------------------------------------------
 import Data.Aeson
+import qualified Data.ByteString.Lazy as BL
 import Data.Text (Text)
+import Data.Text.Encoding
 ------------------------------------------------------------------------------
 import Chainweb.Api.Hash
 import Chainweb.Api.PactCommand
@@ -23,9 +25,9 @@ data Transaction = Transaction
 mkTransaction :: PactCommand -> [Sig] -> Either String Transaction
 mkTransaction pc sigs = do
     h <- blake2b 32 mempty cmdBytes
-    pure $ Transaction (Hash h) sigs pc
+    pure $ Transaction (Hash h) sigs pc (decodeUtf8 cmdBytes)
   where
-    cmdBytes = BSL.toStrict $ encode pc
+    cmdBytes = BL.toStrict $ encode pc
 
 instance ToJSON Transaction where
   toJSON Transaction{..} = object
