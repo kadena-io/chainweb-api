@@ -27,6 +27,7 @@ instance FromJSON ParsedDecimal where
                         Just d -> return d
                         Nothing -> fail $ "Failure parsing decimal string: " ++ show s
   parseJSON (Number n) = return $ ParsedDecimal (fromRational $ toRational n)
+  parseJSON v@Object{} = ParsedDecimal <$> decoder decimalCodec v
   parseJSON v = fail $ "Failure parsing decimal: " ++ show v
 
 instance ToJSON ParsedDecimal where
@@ -90,3 +91,21 @@ jsIntegerBounds = (-9007199254740991,9007199254740991)
 isSafeInteger :: Integer -> Bool
 isSafeInteger i = i >= l && i <= h
   where (l,h) = jsIntegerBounds
+
+-- | Decimals encode to a Scientific, which is encoded as an object + String
+-- if mantissa precision exceeds JS.
+-- TODO fromRational . toRational may not be the speediest.
+decimalCodec :: Codec Decimal
+decimalCodec = Codec enc dec
+  where
+    enc d@(Decimal _places mantissa)
+      | isSafeInteger mantissa = Number $ fromRational $ toRational d
+      | otherwise = object [ field .= show d ]
+    {-# INLINE enc #-}
+    dec (Number n) = return $ fromRational $ toRational n
+    dec (Object o) = o .: field >>= \s -> case readMaybe (T.unpack s) of
+      Just d -> return d
+      Nothing -> fail $ "Invalid decimal value: " ++ show s
+    dec v = fail $ "Invalid decimal value: " ++ show v
+    {-# INLINE dec #-}
+    field = "decimal"
