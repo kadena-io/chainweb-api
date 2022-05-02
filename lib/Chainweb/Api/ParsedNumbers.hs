@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-identities #-}
+
 {-# LANGUAGE CPP                        #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DerivingStrategies         #-}

@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-incomplete-uni-patterns #-}
+
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -22,12 +24,16 @@ data Transaction = Transaction
   , _transaction_cmdStr :: Text
   } deriving (Eq,Show)
 
-mkTransaction :: PactCommand -> [Sig] -> Either String Transaction
-mkTransaction pc sigs = do
-    h <- blake2b 32 mempty cmdBytes
-    pure $ Transaction (Hash h) sigs pc (decodeUtf8 cmdBytes)
+mkTransaction :: PactCommand -> [Sig] -> Transaction
+mkTransaction pc sigs =
+    Transaction (Hash h) sigs pc (decodeUtf8 cmdBytes)
   where
     cmdBytes = BL.toStrict $ encode pc
+
+    -- This function only returns Left when one of the first two args is
+    -- invalid. In this case we're supplying them both as constants, so the
+    -- incomplete pattern match is safe here.
+    Right h = blake2b 32 mempty cmdBytes
 
 instance ToJSON Transaction where
   toJSON Transaction{..} = object
