@@ -23,7 +23,7 @@ import           Control.Monad.Fail (MonadFail)
 
 newtype ChainId = ChainId { unChainId :: Int }
   deriving stock (Eq, Ord, Generic)
-  deriving newtype (Show, Hashable)
+  deriving newtype (Show, Hashable, ToJSONKey, FromJSONKey)
 
 chainIdFromText :: MonadFail m => T.Text -> m ChainId
 chainIdFromText
@@ -37,6 +37,3 @@ instance FromJSON ChainId where
   parseJSON v =
         withText "ChainId" chainIdFromText v
     <|> withScientific "ChainId" (pure . ChainId . round) v
-
-instance ToJSONKey ChainId
-instance FromJSONKey ChainId
