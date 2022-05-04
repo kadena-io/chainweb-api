@@ -37,3 +37,6 @@ instance FromJSON ChainId where
   parseJSON v =
         withText "ChainId" chainIdFromText v
     <|> withScientific "ChainId" (pure . ChainId . round) v
+
+instance ToJSONKey ChainId
+instance FromJSONKey ChainId
