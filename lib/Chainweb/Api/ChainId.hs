@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP                        #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
@@ -13,6 +14,7 @@ import           Control.Applicative ((<|>))
 import           Data.Aeson
 import           Data.Hashable
 import qualified Data.Text as T
+import           GHC.Generics
 import           Text.Read (readMaybe)
 #if !MIN_VERSION_base(4,13,0)
 import           Control.Monad.Fail (MonadFail)
@@ -20,7 +22,7 @@ import           Control.Monad.Fail (MonadFail)
 ------------------------------------------------------------------------------
 
 newtype ChainId = ChainId { unChainId :: Int }
-  deriving stock (Eq, Ord)
+  deriving stock (Eq, Ord, Generic)
   deriving newtype (Show, Hashable)
 
 chainIdFromText :: MonadFail m => T.Text -> m ChainId
@@ -29,16 +31,9 @@ chainIdFromText
   . readMaybe . T.unpack
 
 instance ToJSON ChainId where
-  toJSON = toJSON
+  toJSON (ChainId c) = toJSON c
 
 instance FromJSON ChainId where
   parseJSON v =
         withText "ChainId" chainIdFromText v
     <|> withScientific "ChainId" (pure . ChainId . round) v
-
---TODO: Is this right?
-instance ToJSONKey ChainId where
-  toJSONKey = toJSONKey
-
-instance FromJSONKey ChainId where
-  fromJSONKey = FromJSONKeyTextParser chainIdFromText
