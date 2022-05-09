@@ -42,11 +42,15 @@ instance ToJSON Transaction where
     , "cmd" .= _transaction_cmdStr
     ]
 
+-- | This instance parses a serialized Pact Command but it does so leniently and
+-- will succeed even if the hash field is not present. This allows this instance
+-- to also parse the CommandSigData type from signing-api.
 instance FromJSON Transaction where
   parseJSON = withObject "Transaction" $ \o -> do
     cmdRaw <- o .: "cmd"
+    let Right h = blake2b 32 mempty (encodeUtf8 cmdRaw)
     Transaction
-      <$> o .: "hash"
+      <$> o .:? "hash" .!= (Hash h)
       <*> o .: "sigs"
       <*> (withEmbeddedJSON "Embedded Cmd" parseJSON (String cmdRaw))
       <*> pure cmdRaw
