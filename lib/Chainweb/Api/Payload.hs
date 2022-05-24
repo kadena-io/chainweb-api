@@ -59,10 +59,10 @@ instance ToJSON Payload where
 
 instance FromJSON Payload where
   parseJSON = withObject "Payload" $ \o -> case HM.lookup "exec" o of
-    Nothing -> case HM.lookup "cont" o of
+    Just v | v /= Null -> ExecPayload <$> parseJSON v
+    _ -> case HM.lookup "cont" o of
                  Nothing -> fail "Payload must be exec or cont"
                  Just v  -> ContPayload <$> parseJSON v
-    Just v -> ExecPayload <$> parseJSON v
 
 payloadCode :: Payload -> Text
 payloadCode (ExecPayload e) = _exec_code e
