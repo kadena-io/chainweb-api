@@ -36,7 +36,7 @@ type TxApi
     :<|> EventsApi
     :<|> TxDetailApi
     :<|> TxsDetailApi
-    :<|> AccountApi
+--    :<|> AccountApi
 
 type RecentTxsApi = "recent"
     :> Get '[JSON] [TxSummary]
