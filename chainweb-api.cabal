@@ -22,7 +22,7 @@ library
 
   build-depends:
       Decimal               >= 0.4.2 && < 0.6
-    , aeson                 ^>=1.4
+    , aeson                 >=1.4
     , attoparsec            >= 0.13.0.2 && < 0.15
     , base                  >=4.7  && <5
     , base16-bytestring     ^>=0.1
@@ -93,6 +93,6 @@ test-suite testsuite
         , bytestring
         , cereal
         , neat-interpolation >= 0.5
-        , tasty       ^>= 1.2
-        , tasty-hunit ^>= 0.10
+        , tasty       >= 1.2
+        , tasty-hunit >= 0.10
         , text
