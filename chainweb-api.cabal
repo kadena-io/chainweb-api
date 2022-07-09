@@ -33,7 +33,7 @@ library
     , data-default          ^>=0.7
     , hashable              >=1.2 && < 1.4
     , readable              ^>=0.3
-    , servant               >= 0.16 && < 0.19
+    , servant               >= 0.16
     , text                  ^>=1.2
     , time                  >=1.8 && < 1.11
     , unordered-containers  ^>=0.2
