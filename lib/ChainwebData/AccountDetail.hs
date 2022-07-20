@@ -9,7 +9,7 @@ import Data.Time
 import GHC.Generics
 
 data AccountDetail = AccountDetail
-  { _acDetail_creationTime :: UTCTime
+  { _acDetail_creationTime :: Either Text UTCTime
   , _acDetail_blockHash :: Text
   , _acDetail_requestKey :: Text
   , _acDetail_chainid :: Int
