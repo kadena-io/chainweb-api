@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE FlexibleInstances #-}
 
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 module ChainwebData.AccountDetail where
 
 import ChainwebData.Util
@@ -19,6 +21,13 @@ data AccountDetail = AccountDetail
   , _acDetail_toAccount :: Text
   , _acDetail_amount :: Decimal
   } deriving (Eq, Show, Generic)
+
+
+instance ToJSON Decimal where
+  toJSON d = Number $ fromRational $ toRational d
+
+instance FromJSON Decimal where
+  parseJSON = withScientific "Decimal" (pure . fromRational . toRational)
 
 instance ToJSON AccountDetail where
     toJSON = lensyToJSON 10
