@@ -4,7 +4,7 @@ module ChainwebData.AccountDetail where
 
 import ChainwebData.Util
 import Data.Aeson
-import Data.Scientific (Scientific)
+import Data.Decimal (Decimal)
 import Data.Text (Text)
 import GHC.Generics
 
@@ -17,7 +17,7 @@ data AccountDetail = AccountDetail
   , _acDetail_name :: Text
   , _acDetail_fromAccount :: Text
   , _acDetail_toAccount :: Text
-  , _acDetail_amount :: Scientific
+  , _acDetail_amount :: Decimal
   } deriving (Eq, Show, Generic)
 
 instance ToJSON AccountDetail where
