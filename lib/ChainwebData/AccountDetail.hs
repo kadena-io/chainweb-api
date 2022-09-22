@@ -2,6 +2,7 @@
 
 module ChainwebData.AccountDetail where
 
+import Chainweb.Api.ParsedNumbers
 import ChainwebData.Util
 import Data.Aeson
 import Data.Scientific
