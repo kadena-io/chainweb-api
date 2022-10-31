@@ -32,7 +32,7 @@ instance ToJSON ChainwebMeta where
 
 instance FromJSON ChainwebMeta where
   parseJSON = withObject "ChainwebMeta" $ \o -> ChainwebMeta
-    <$>  (o .: "chainId")
+    <$>  o .: "chainId"
     <*> (fromIntegral . unParsedInteger <$> o .: "creationTime")
     <*> (fromIntegral . unParsedInteger <$> o .: "ttl")
     <*> (fromIntegral . unParsedInteger <$> o .: "gasLimit")
