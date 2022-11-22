@@ -14,6 +14,7 @@ import           Data.Text (Text)
 import           GHC.Generics
 import           Servant.API
 ------------------------------------------------------------------------------
+import           Chainweb.Api.ChainId
 import           Chainweb.Api.Common
 import           ChainwebData.EventDetail
 import           ChainwebData.AccountDetail
@@ -82,9 +83,9 @@ type EventsApi = "events"
     :> Get '[JSON] [EventDetail]
 
 type AccountApi = "account"
-  :> Capture "token" Text
   :> Capture "account-name" Text
-  :> Capture "chain" Int
+  :> QueryParam "token" Text
+  :> QueryParam "chain" ChainId
   :> LimitParam
   :> OffsetParam
   :> Get '[JSON] [AccountDetail]
