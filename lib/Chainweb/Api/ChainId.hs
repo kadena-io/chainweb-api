@@ -3,6 +3,7 @@
 {-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 
 module Chainweb.Api.ChainId
   ( ChainId(..)
@@ -15,6 +16,7 @@ import           Data.Aeson
 import           Data.Hashable
 import qualified Data.Text as T
 import           GHC.Generics
+import           Servant.API (FromHttpApiData,ToHttpApiData)
 import           Text.Read (readMaybe)
 #if !MIN_VERSION_base(4,13,0)
 import           Control.Monad.Fail (MonadFail)
@@ -24,6 +26,8 @@ import           Control.Monad.Fail (MonadFail)
 newtype ChainId = ChainId { unChainId :: Int }
   deriving stock (Eq, Ord, Generic)
   deriving newtype (Show, Hashable, ToJSONKey, FromJSONKey)
+deriving instance FromHttpApiData ChainId
+deriving instance ToHttpApiData ChainId
 
 chainIdFromText :: MonadFail m => T.Text -> m ChainId
 chainIdFromText
