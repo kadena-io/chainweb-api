@@ -30,6 +30,7 @@ import qualified Data.Text as T
 import           Data.Time
 import           Data.Word
 import           Servant.API
+import           Servant.API.ResponseHeaders
 ------------------------------------------------------------------------------
 
 
@@ -124,6 +125,17 @@ type PaginationCache k v = Map k [CacheVal v]
 type PaginationInput k = (k, PaginationQuery)
 type PaginationOutput k v = (k, Maybe (CacheVal v))
 
+------------------------------------------------------------------------------
+-- A token to be used for getting the next batch of results
+
+type NextTokenHeader = Header "Chainweb-Next" NextToken
+type NextHeaders = Headers '[Header "Chainweb-Next" NextToken]
+type NextTokenParam = QueryParam "next" NextToken
+
+newtype NextToken = NextToken { unNextToken :: T.Text }
+
+deriving instance FromHttpApiData NextToken
+deriving instance ToHttpApiData NextToken
 
 ------------------------------------------------------------------------------
 -- | Along with the query results we also need to store the PaginationQuery

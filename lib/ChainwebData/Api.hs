@@ -89,7 +89,8 @@ type AccountApi = "account"
   :> QueryParam "fromheight" BlockHeight
   :> LimitParam
   :> OffsetParam
-  :> Get '[JSON] [AccountDetail]
+  :> NextTokenParam
+  :> Get '[JSON] (NextHeaders [AccountDetail])
 
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int
