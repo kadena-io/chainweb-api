@@ -46,7 +46,8 @@ type TxSearchApi = "search"
     :> LimitParam
     :> OffsetParam
     :> SearchParam
-    :> Get '[JSON] [TxSummary]
+    :> NextTokenParam
+    :> Get '[JSON] (NextHeaders [TxSummary])
 
 newtype RequestKey = RequestKey Text
 deriving instance FromHttpApiData RequestKey
@@ -80,7 +81,8 @@ type EventsApi = "events"
     :> QueryParam "name" EventName
     :> QueryParam "modulename" EventModuleName
     :> QueryParam "minheight" BlockHeight
-    :> Get '[JSON] [EventDetail]
+    :> NextTokenParam
+    :> Get '[JSON] (NextHeaders [EventDetail])
 
 type AccountApi = "account"
   :> Capture "account-name" Text
