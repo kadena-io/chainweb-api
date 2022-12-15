@@ -7,6 +7,7 @@ import ChainwebData.Util
 import Data.Aeson
 import Data.Scientific
 import Data.Text (Text)
+import Data.Time
 import GHC.Generics
 
 data AccountDetail = AccountDetail
@@ -19,6 +20,7 @@ data AccountDetail = AccountDetail
   , _acDetail_fromAccount :: Text
   , _acDetail_toAccount :: Text
   , _acDetail_amount :: Scientific
+  , _acDetail_blockTime :: UTCTime
   } deriving (Eq, Show, Generic)
 
 instance ToJSON AccountDetail where
