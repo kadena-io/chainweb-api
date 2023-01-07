@@ -63,6 +63,7 @@ library
     Chainweb.Api.MinerData
     Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
+    Chainweb.Api.PactNumber
     Chainweb.Api.ParsedNumbers
     Chainweb.Api.Payload
     Chainweb.Api.RespItems
