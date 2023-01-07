@@ -6,6 +6,7 @@
 {-# LANGUAGE RecursiveDo #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Chainweb.Api.PactNumber where
 
@@ -29,7 +30,10 @@ data PactNumber = PactInteger Integer | PactDecimal Decimal
 
 instance FromJSON PactNumber where
   parseJSON v@(A.Number s) =
-    case floatingOrInteger s of
+    -- These sugggested types for the output of floatingOrInteger don't actually matter.
+    -- The decoder actually determines the type of the result.
+    -- These type applications merely exist to suppress compiler warnings.
+    case floatingOrInteger @Double @Integer s of
       Left _ -> PactDecimal <$> decoder decimalCodec v
       Right _ -> PactInteger <$> decoder integerCodec v
   parseJSON v@(Object _) = do
