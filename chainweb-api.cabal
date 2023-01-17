@@ -69,6 +69,7 @@ library
     Chainweb.Api.RespItems
     Chainweb.Api.Sig
     Chainweb.Api.Signer
+    Chainweb.Api.StringEncoded
     Chainweb.Api.Transaction
     ChainwebData.Api
     ChainwebData.EventDetail
