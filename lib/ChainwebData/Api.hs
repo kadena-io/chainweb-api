@@ -17,7 +17,7 @@ import           Servant.API
 import           Chainweb.Api.ChainId
 import           Chainweb.Api.Common
 import           ChainwebData.EventDetail
-import           ChainwebData.AccountDetail
+import           ChainwebData.TransferDetail
 import           ChainwebData.Pagination
 import           ChainwebData.TxSummary
 import           ChainwebData.TxDetail
@@ -91,7 +91,7 @@ type AccountApi = "account"
   :> LimitParam
   :> OffsetParam
   :> NextTokenParam
-  :> Get '[JSON] (NextHeaders [AccountDetail])
+  :> Get '[JSON] (NextHeaders [TransferDetail])
 
 data ChainwebDataStats = ChainwebDataStats
   { _cds_transactionCount :: Maybe Int
