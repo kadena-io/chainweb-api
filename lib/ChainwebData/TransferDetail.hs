@@ -18,7 +18,7 @@ data TransferDetail = TransferDetail
   , _trDetail_name :: Text
   , _trDetail_fromAccount :: Text
   , _trDetail_toAccount :: Text
-  , _trDetail_amount :: Scientific
+  , _trDetail_amount :: StringEncoded Scientific
   , _trDetail_blockTime :: UTCTime
   } deriving (Eq, Show, Generic)
 
