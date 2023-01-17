@@ -73,7 +73,7 @@ library
     Chainweb.Api.Transaction
     ChainwebData.Api
     ChainwebData.EventDetail
-    ChainwebData.AccountDetail
+    ChainwebData.TransferDetail
     ChainwebData.Pagination
     ChainwebData.TxSummary
     ChainwebData.TxDetail
