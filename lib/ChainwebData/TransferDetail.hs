@@ -2,6 +2,7 @@
 
 module ChainwebData.TransferDetail where
 
+import Chainweb.Api.StringEncoded
 import ChainwebData.Util
 import Data.Aeson
 import Data.Scientific
