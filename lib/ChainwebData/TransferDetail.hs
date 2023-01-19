@@ -13,10 +13,10 @@ import GHC.Generics
 data TransferDetail = TransferDetail
   { _trDetail_blockHash :: Text
   , _trDetail_requestKey :: Text
-  , _trDetail_chainid :: Int
+  , _trDetail_chain :: Int
   , _trDetail_height :: Int
   , _trDetail_idx :: Int
-  , _trDetail_name :: Text
+  , _trDetail_token :: Text
   , _trDetail_fromAccount :: Text
   , _trDetail_toAccount :: Text
   , _trDetail_amount :: StringEncoded Scientific
