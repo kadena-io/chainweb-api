@@ -88,6 +88,7 @@ type AccountApi = "account"
   :> Capture "account-name" Text
   :> QueryParam "token" Text
   :> QueryParam "chain" ChainId
+  :> QueryParam "minheight" BlockHeight
   :> LimitParam
   :> OffsetParam
   :> NextTokenParam
