@@ -46,6 +46,8 @@ type TxSearchApi = "search"
     :> LimitParam
     :> OffsetParam
     :> SearchParam
+    :> QueryParam "minheight" BlockHeight
+    :> QueryParam "maxheight" BlockHeight
     :> NextTokenParam
     :> Get '[JSON] (NextHeaders [TxSummary])
 
@@ -81,6 +83,7 @@ type EventsApi = "events"
     :> QueryParam "name" EventName
     :> QueryParam "modulename" EventModuleName
     :> QueryParam "minheight" BlockHeight
+    :> QueryParam "maxheight" BlockHeight
     :> NextTokenParam
     :> Get '[JSON] (NextHeaders [EventDetail])
 
@@ -89,6 +92,7 @@ type AccountApi = "account"
   :> QueryParam "token" Text
   :> QueryParam "chain" ChainId
   :> QueryParam "minheight" BlockHeight
+  :> QueryParam "maxheight" BlockHeight
   :> LimitParam
   :> OffsetParam
   :> NextTokenParam
