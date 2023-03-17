@@ -19,6 +19,8 @@ data TransferDetail = TransferDetail
   , _trDetail_token :: Text
   , _trDetail_fromAccount :: Text
   , _trDetail_toAccount :: Text
+  , _trDetail_crossChainAccount :: Maybe Text
+  , _trDetail_crossChainId :: Maybe Int
   , _trDetail_amount :: StringEncoded Scientific
   , _trDetail_blockTime :: UTCTime
   } deriving (Eq, Show, Generic)
