@@ -45,7 +45,7 @@ type RecentTxsApi = "recent"
 type TxSearchApi = "search"
     :> LimitParam
     :> OffsetParam
-    :> SearchParam
+    :> (QueryParam "search" Text :<|> QueryParam "pactid" Text)
     :> QueryParam "minheight" BlockHeight
     :> QueryParam "maxheight" BlockHeight
     :> NextTokenParam
