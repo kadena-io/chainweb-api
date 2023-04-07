@@ -39,7 +39,8 @@ import           Servant.API
 
 type LimitParam = QueryParam "limit" Limit
 type OffsetParam = QueryParam "offset" Offset
-data SearchParam = SearchByPactId Text | SearchByText Text
+type SearchParam = QueryParam "search" Text
+type PactIdParam = QueryParam "pactid" Text
 
 newtype Limit = Limit { unLimit :: Integer }
 
