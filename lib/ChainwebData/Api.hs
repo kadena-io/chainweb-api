@@ -46,6 +46,7 @@ type TxSearchApi = "search"
     :> LimitParam
     :> OffsetParam
     :> SearchParam
+    :> PactIdParam
     :> QueryParam "minheight" BlockHeight
     :> QueryParam "maxheight" BlockHeight
     :> NextTokenParam
