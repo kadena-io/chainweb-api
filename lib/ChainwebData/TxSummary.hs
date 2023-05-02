@@ -20,6 +20,7 @@ import           Chainweb.Api.Hash
 import           Chainweb.Api.Payload
 import           Chainweb.Api.PactCommand
 import           Chainweb.Api.Transaction
+import           ChainwebData.Util
 ------------------------------------------------------------------------------
 
 data TxResult
@@ -42,36 +43,19 @@ data TxSummary = TxSummary
   , _txSummary_code :: Maybe Text
   , _txSummary_continuation :: Maybe Value
   , _txSummary_result :: TxResult
+  , _txSummary_initialCode :: Maybe Text
+  , _txSummary_previousSteps :: Maybe [Text]
   } deriving (Eq,Show,Generic)
 
 instance ToJSON TxSummary where
-    toJSON s = object
-      [ "chain" .= _txSummary_chain s
-      , "height" .= _txSummary_height s
-      , "blockHash" .= _txSummary_blockHash s
-      , "creationTime" .= _txSummary_creationTime s
-      , "requestKey" .= _txSummary_requestKey s
-      , "sender" .= _txSummary_sender s
-      , "code" .= _txSummary_code s
-      , "continuation" .= _txSummary_continuation s
-      , "result" .= _txSummary_result s
-      ]
+    toJSON = lensyToJSON 11
 
 instance FromJSON TxSummary where
-    parseJSON = withObject "TxSummary" $ \v -> TxSummary
-      <$> v .: "chain"
-      <*> v .: "height"
-      <*> v .: "blockHash"
-      <*> v .: "creationTime"
-      <*> v .: "requestKey"
-      <*> v .: "sender"
-      <*> v .: "code"
-      <*> v .:? "continuation"
-      <*> v .: "result"
+    parseJSON = lensyParseJSON 11
 
 mkTxSummary :: ChainId -> BlockHeight -> Hash -> Transaction -> TransactionOutput -> TxSummary
 mkTxSummary (ChainId chain) height bh (Transaction th _ pc _) tout =
-    TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r
+    TxSummary chain height (hashB64U bh) t (hashB64U th) s code cont r Nothing Nothing
   where
     meta = _pactCommand_meta pc
     t = posixSecondsToUTCTime $ _chainwebMeta_creationTime meta
