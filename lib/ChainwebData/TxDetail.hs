@@ -43,6 +43,8 @@ data TxDetail = TxDetail
   , _txDetail_code :: Maybe Text
   , _txDetail_success :: Bool
   , _txDetail_events :: [TxEvent]
+  , _txDetail_initialCode :: Maybe Text
+  , _txDetail_previousSteps :: Maybe [Text]
   } deriving (Eq,Show,Generic)
 
 instance ToJSON TxDetail where
