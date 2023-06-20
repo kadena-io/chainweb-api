@@ -1,12 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE PackageImports #-}
 {-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE RecursiveDo #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE InstanceSigs #-}
 
 module Chainweb.Api.PactNumber where
 
@@ -17,7 +13,6 @@ import           Data.Aeson
 import           Data.Aeson.Types
 import qualified Data.Aeson.Types as A
 import           Data.Decimal
-import           Data.Scientific
 import           Data.Text (Text)
 import qualified Data.Text as T
 import           Text.Read (readMaybe)
@@ -29,13 +24,8 @@ data PactNumber = PactInteger Integer | PactDecimal Decimal
   deriving (Eq,Ord,Show)
 
 instance FromJSON PactNumber where
-  parseJSON v@(A.Number s) =
-    -- These sugggested types for the output of floatingOrInteger don't actually matter.
-    -- The decoder actually determines the type of the result.
-    -- These type applications merely exist to suppress compiler warnings.
-    case floatingOrInteger @Double @Integer s of
-      Left _ -> PactDecimal <$> decoder decimalCodec v
-      Right _ -> PactInteger <$> decoder integerCodec v
+  parseJSON :: Value -> Parser PactNumber
+  parseJSON v@A.Number{} = PactDecimal <$> decoder decimalCodec v
   parseJSON v@(Object _) = do
     (PactInteger <$> decoder integerCodec v) <|> (PactDecimal <$> decoder decimalCodec v)
   parseJSON v = A.typeMismatch "Numeric" v
