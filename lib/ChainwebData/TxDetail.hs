@@ -3,6 +3,7 @@
 module ChainwebData.TxDetail where
 
 import Chainweb.Api.Signer (Signer)
+import Chainweb.Api.Sig (Sig)
 import ChainwebData.Util
 import Data.Aeson
 import Data.Text (Text)
@@ -47,6 +48,7 @@ data TxDetail = TxDetail
   , _txDetail_initialCode :: Maybe Text
   , _txDetail_previousSteps :: Maybe [Text]
   , _txDetail_signers :: [Signer]
+  , _txDetail_sigs :: [Sig]
   } deriving (Eq,Show,Generic)
 
 instance ToJSON TxDetail where
