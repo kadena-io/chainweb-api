@@ -125,6 +125,7 @@ encodeChainId = putWord32le . fromIntegral . unChainId
 
 encodeChainwebVersion :: Putter Text
 encodeChainwebVersion "development" = putWord32le 0x01
+encodeChainwebVersion "fast-development" = putWord32le 0x02
 encodeChainwebVersion "mainnet01" = putWord32le 0x05
 encodeChainwebVersion "testnet04" = putWord32le 0x07
 encodeChainwebVersion v = error $ "chainweb version " <> unpack v <> " does not exist"
@@ -192,6 +193,7 @@ decodeAdjacents = label "Adjacents" $ do
 decodeChainwebVersion :: Get Text
 decodeChainwebVersion = label "ChainwebVersion" $ getWord32le >>= \case
   0x01 -> return "development"
+  0x02 -> return "fast-development"
   0x05 -> return "mainnet01"
   0x07 -> return "testnet04"
   x -> fail $ "chainweb version " <> show x <> " does not exist"
