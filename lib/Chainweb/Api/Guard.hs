@@ -8,6 +8,7 @@ import           Control.Applicative
 import           Data.Aeson
 import           Data.Maybe
 import           Data.Set (Set)
+import           Data.String (IsString)
 import           Data.Text (Text)
 ------------------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ data Guard
   | GUser UserGuard
   deriving (Eq,Show)
 
-keyNamef :: Text
+keyNamef :: IsString s => s
 keyNamef = "keysetref"
 
 instance ToJSON Guard where
