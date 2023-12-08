@@ -21,24 +21,24 @@ library
     -Wincomplete-uni-patterns -Widentities
 
   build-depends:
-      Decimal               >= 0.4.2 && < 0.6
-    , aeson                 ^>=1.4
-    , attoparsec            >= 0.13.0.2 && < 0.15
-    , base                  >=4.7  && <5
-    , base16-bytestring     ^>=0.1
-    , base64-bytestring     ^>=1.0
-    , bytestring            ^>=0.10
-    , cereal                ^>=0.5
-    , containers            ^>=0.6
-    , data-default          ^>=0.7
-    , hashable              >=1.2 && < 1.4
-    , readable              ^>=0.3
+      Decimal               >= 0.4.2
+    , aeson                 >=1.4
+    , attoparsec            >= 0.13.0.2
+    , base                  >=4.7 && <5
+    , base16-bytestring     >=0.1
+    , base64-bytestring     >=1.0
+    , bytestring            >=0.10
+    , cereal                >=0.5
+    , containers            >=0.6
+    , data-default          >=0.7
+    , hashable              >=1.2
+    , readable              >=0.3
     , scientific
-    , servant               >= 0.16 && < 0.19
-    , text                  ^>=1.2
-    , time                  >=1.8 && < 1.11
-    , unordered-containers  ^>=0.2
-    , vector                >= 0.11.0.0 && < 0.13
+    , servant               >= 0.16
+    , text                  >=1.2
+    , time                  >=1.8
+    , unordered-containers  >=0.2
+    , vector                >= 0.11.0.0
 
   if !impl(ghcjs)
     build-depends:
@@ -96,6 +96,6 @@ test-suite testsuite
         , bytestring
         , cereal
         , neat-interpolation >= 0.5
-        , tasty       ^>= 1.2
-        , tasty-hunit ^>= 0.10
+        , tasty       >= 1.2
+        , tasty-hunit >= 0.10
         , text

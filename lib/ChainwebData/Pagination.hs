@@ -20,7 +20,7 @@ import           Data.Aeson
 --import           Data.ByteString.Lazy (ByteString)
 import           Data.Default
 import           Data.Function        (on)
-import           Data.List
+import qualified Data.List as List
 import           Data.Ord
 import           Data.Map (Map)
 import qualified Data.Map as M
@@ -207,8 +207,8 @@ prune
     -> PaginationCache k (PaginationResults v)
     -> PaginationCache k (PaginationResults v)
 prune n m =
-    M.fromList $ map g $ groupBy ((==) `on` fst) $ sortBy (comparing fst) $
-    drop n $ sortBy (comparing $ _prTimestamp . _pvValue . snd) $
+    M.fromList $ map g $ List.groupBy ((==) `on` fst) $ List.sortBy (comparing fst) $
+    drop n $ List.sortBy (comparing $ _prTimestamp . _pvValue . snd) $
     concatMap f $ M.toList m
   where
     f (k,vs) = map (k,) vs
