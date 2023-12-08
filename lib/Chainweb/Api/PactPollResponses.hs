@@ -37,13 +37,13 @@ data CommandResult l = CommandResult
 
 instance FromJSON l => FromJSON (CommandResult l) where
   parseJSON = withObject "CommandResult" $ \o -> CommandResult
-      <$> o .: "requestKey"
+      <$> o .: "reqKey"
       <*> o .:? "txId"
       <*> o .: "result"
       <*> o .: "gas"
       <*> o .:? "logs"
       <*> o .:? "continuation"
-      <*> o .:? "metadata"
+      <*> o .:? "metaData"
       <*> (events <$> o .: "events")
     where
       events Nothing = []
