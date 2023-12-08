@@ -8,7 +8,9 @@ import           Data.Aeson.Encoding
 import           Data.Aeson.Types
 import           Data.ByteString (ByteString)
 import qualified Data.ByteString.Base16 as B16
+import           Data.String (fromString)
 import           Data.Text (Text)
+import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 ------------------------------------------------------------------------------
 import           Chainweb.Api.Base64Url
@@ -18,7 +20,7 @@ newtype Hash = Hash { unHash :: ByteString }
   deriving (Eq,Ord,Show,Read)
 
 instance ToJSONKey Hash where
-  toJSONKey = ToJSONKeyText hashB64U (text . hashB64U)
+  toJSONKey = ToJSONKeyText (fromString . T.unpack . hashB64U) (text . hashB64U)
 
 instance FromJSONKey Hash where
   fromJSONKey = FromJSONKeyTextParser hashParser

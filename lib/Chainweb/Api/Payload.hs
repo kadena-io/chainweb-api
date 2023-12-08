@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -5,7 +6,6 @@ module Chainweb.Api.Payload where
 
 ------------------------------------------------------------------------------
 import           Data.Aeson
-import qualified Data.HashMap.Strict as HM
 import           Data.Text (Text)
 ------------------------------------------------------------------------------
 
@@ -58,11 +58,12 @@ instance ToJSON Payload where
   toJSON (ContPayload cont) = Object $ "cont" .= toJSON cont
 
 instance FromJSON Payload where
-  parseJSON = withObject "Payload" $ \o -> case HM.lookup "exec" o of
-    Just v | v /= Null -> ExecPayload <$> parseJSON v
-    _ -> case HM.lookup "cont" o of
-                 Nothing -> fail "Payload must be exec or cont"
-                 Just v  -> ContPayload <$> parseJSON v
+  parseJSON = withObject "Payload" $ \o -> do
+    o .: "exec" >>= \case
+      Nothing -> o .: "cont" >>= \case
+        Nothing -> fail "Payload must be exec or cont"
+        Just cont -> return $ ContPayload cont
+      Just exec -> return $ ExecPayload exec
 
 payloadCode :: Payload -> Text
 payloadCode (ExecPayload e) = _exec_code e

@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Chainweb.Api.BytesLE where
 
 ------------------------------------------------------------------------------
@@ -16,6 +18,14 @@ newtype BytesLE = BytesLE
   { unBytesLE :: ByteString
   } deriving (Eq,Ord,Show)
 
+#if MIN_VERSION_base16_bytestring(1,0,0)
+-- Newer version of base16-bytestring
+hexToBytesLE :: Text -> Either String BytesLE
+hexToBytesLE t = case B16.decode $ T.encodeUtf8 t of
+  Right decoded -> Right $ BytesLE decoded
+  Left _ -> Left $ "Invalid hex string: " <> T.unpack t
+#else
+-- Older version of base16-bytestring
 hexToBytesLE :: Text -> Either String BytesLE
 hexToBytesLE t =
     if B.null invalid
@@ -23,6 +33,7 @@ hexToBytesLE t =
       else Left $ "Invalid hex string: " <> T.unpack t
   where
     (decoded, invalid) = B16.decode $ T.encodeUtf8 t
+#endif
 
 hexFromBytesLE :: BytesLE -> Text
 hexFromBytesLE = T.decodeUtf8 . B16.encode . unBytesLE
