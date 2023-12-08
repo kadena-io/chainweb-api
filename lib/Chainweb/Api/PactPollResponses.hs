@@ -4,6 +4,7 @@
 module Chainweb.Api.PactPollResponses where
 
 ------------------------------------------------------------------------------
+import           Control.Applicative ((<|>))
 import           Data.Aeson
 import           Data.Hashable (Hashable)
 import qualified Data.HashMap.Strict as HM
@@ -13,16 +14,21 @@ import           Data.Word
 ------------------------------------------------------------------------------
 
 newtype RequestKey = RequestKey { unRequestKey :: Text }
-  deriving (Eq, Ord, Show, Hashable, FromJSON, FromJSONKey, ToJSON, ToJSONKey)
+  deriving (Eq, Ord, Show, Hashable, FromJSON, FromJSONKey)
 
 newtype TxId = TxId Word64
-  deriving (Eq, Ord, Show, FromJSON, ToJSON)
+  deriving (Eq, Ord, Show, FromJSON)
 
 newtype PactResult = PactResult { unPactResult :: Either Value Value }
-  deriving (Eq, Show, FromJSON, ToJSON)
+  deriving (Eq, Show)
+
+
+instance FromJSON PactResult where
+  parseJSON (Object o) = PactResult <$> (Right <$> o .: "data" <|> Left <$> o .: "error")
+  parseJSON p = fail $ "Invalid PactResult: " ++ show p
 
 newtype Gas = Gas Int64
-  deriving (Eq, Ord, Show, FromJSON, ToJSON)
+  deriving (Eq, Ord, Show, FromJSON)
 
 data CommandResult l = CommandResult
   { _crReqKey :: !RequestKey
@@ -50,7 +56,7 @@ instance FromJSON l => FromJSON (CommandResult l) where
       events (Just es) = es
 
 newtype PactHash = PactHash { unHash :: Text }
-  deriving (Eq, Ord, Show, FromJSON, ToJSON)
+  deriving (Eq, Ord, Show, FromJSON)
 
 newtype PollResponses = PollResponses
   { _prResults :: HM.HashMap RequestKey (CommandResult PactHash)
