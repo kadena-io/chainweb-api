@@ -64,6 +64,7 @@ library
     Chainweb.Api.NodeInfo
     Chainweb.Api.PactCommand
     Chainweb.Api.PactNumber
+    Chainweb.Api.PactPollResponses
     Chainweb.Api.ParsedNumbers
     Chainweb.Api.Payload
     Chainweb.Api.RespItems
