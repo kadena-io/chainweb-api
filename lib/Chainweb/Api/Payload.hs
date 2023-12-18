@@ -59,8 +59,8 @@ instance ToJSON Payload where
 
 instance FromJSON Payload where
   parseJSON = withObject "Payload" $ \o -> do
-    o .: "exec" >>= \case
-      Nothing -> o .: "cont" >>= \case
+    o .:? "exec" >>= \case
+      Nothing -> o .:? "cont" >>= \case
         Nothing -> fail "Payload must be exec or cont"
         Just cont -> return $ ContPayload cont
       Just exec -> return $ ExecPayload exec
