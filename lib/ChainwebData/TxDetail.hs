@@ -49,6 +49,7 @@ data TxDetail = TxDetail
   , _txDetail_previousSteps :: Maybe [Text]
   , _txDetail_signers :: [Signer]
   , _txDetail_sigs :: [Sig]
+  , _txDetail_verifiers :: Maybe Value
   } deriving (Eq,Show,Generic)
 
 instance ToJSON TxDetail where
