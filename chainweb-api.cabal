@@ -69,9 +69,11 @@ library
     Chainweb.Api.Payload
     Chainweb.Api.RespItems
     Chainweb.Api.Sig
+    Chainweb.Api.SigCapability
     Chainweb.Api.Signer
     Chainweb.Api.StringEncoded
     Chainweb.Api.Transaction
+    Chainweb.Api.Verifier
     ChainwebData.Api
     ChainwebData.EventDetail
     ChainwebData.TransferDetail
