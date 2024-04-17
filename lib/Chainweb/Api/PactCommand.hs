@@ -10,11 +10,13 @@ import Data.Text (Text)
 import Chainweb.Api.ChainwebMeta
 import Chainweb.Api.Payload
 import Chainweb.Api.Signer
+import Chainweb.Api.Verifier
 ------------------------------------------------------------------------------
 
 data PactCommand = PactCommand
   { _pactCommand_payload :: Payload
   , _pactCommand_signers :: [Signer]
+  , _pactCommand_verifiers :: Maybe [Verifier]
   , _pactCommand_meta    :: ChainwebMeta
   , _pactCommand_nonce   :: Text
   , _pactCommand_network :: Maybe Text
@@ -24,6 +26,7 @@ instance ToJSON PactCommand where
   toJSON PactCommand{..} = object
     [ "payload" .= _pactCommand_payload
     , "signers" .= _pactCommand_signers
+    , "verifiers" .= _pactCommand_verifiers
     , "meta" .= _pactCommand_meta
     , "nonce" .= _pactCommand_nonce
     , "networkId" .= _pactCommand_network
@@ -33,6 +36,7 @@ instance FromJSON PactCommand where
   parseJSON = withObject "PactCommand" $ \o -> PactCommand
     <$> o .: "payload"
     <*> o .: "signers"
+    <*> o .: "verifiers"
     <*> o .: "meta"
     <*> o .: "nonce"
     <*> o .: "networkId"
