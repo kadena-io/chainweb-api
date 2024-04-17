@@ -12,7 +12,7 @@ import Data.Text (Text)
 
 data Verifier = Verifier
   { _verifier_name :: Maybe Text
-  , _verifier_proof :: Maybe Text
+  , _verifier_proof :: Value
   , _verifier_capList :: [SigCapability]
   } deriving (Eq, Show)
 
@@ -22,12 +22,12 @@ instance Ord Verifier where
 instance ToJSON Verifier where
   toJSON Verifier{..} = object $ catMaybes
     [ fmap ("name" .=) _verifier_name
-    , fmap ("proof" .=) _verifier_proof
+    , Just $ "proof" .= _verifier_proof
     , Just $ "clist" .= _verifier_capList
     ]
 
 instance FromJSON Verifier where
   parseJSON = withObject "Verifier" $ \o -> Verifier
     <$> o .:? "name"
-    <*> o .:? "proof"
+    <*> o .: "proof"
     <*> o .: "clist"

@@ -6,7 +6,6 @@ module Chainweb.Api.Signer where
 import Chainweb.Api.SigCapability
 import Data.Aeson
 import Data.Maybe (fromMaybe, catMaybes)
-import Data.Ord
 import Data.Text (Text)
 ------------------------------------------------------------------------------
 
